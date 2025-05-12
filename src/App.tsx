@@ -1,34 +1,87 @@
-import { Button } from "flowbite-react";
+import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import GsapCarouselLayout from "./helpers/compoments/CarouselLayout";
 
-function App() {
+const App = () => {
+  const imgRefs = useRef<HTMLImageElement[]>([]); // Tạo mảng ref để quản lý nhiều hình ảnh
+
+  useEffect(() => {
+    imgRefs.current.forEach((img) => {
+      if (img) {
+        // Thêm sự kiện hover
+        img.addEventListener("mouseenter", () => {
+          gsap.to(img, { y: -10, skew: 20, duration: 0.3 }); // Phóng to khi hover
+          // gsap.to(img, { rotation: 5, duration: 0.3 }); // Xoay nhẹ khi hover
+          gsap.to(img, {
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)",
+            duration: 0.3,
+          }); // Thêm bóng đổ khi hover
+        });
+
+        // Thêm sự kiện mouseleave
+        img.addEventListener("mouseleave", () => {
+          gsap.to(img, { y: 0, scale: 1, duration: 0.3 }); // Trở lại kích thước ban đầu
+          gsap.to(img, {
+            boxShadow: "0 0px 0px rgba(0, 0, 0, 0)",
+            duration: 0.3,
+          });
+        });
+      }
+    });
+
+    // Dọn dẹp sự kiện khi component unmount
+    return () => {
+      imgRefs.current.forEach((img) => {
+        if (img) {
+          img.removeEventListener("mouseenter", () => {});
+          img.removeEventListener("mouseleave", () => {});
+        }
+      });
+    };
+  }, []);
+
   return (
-    <div className="flex flex-wrap gap-2 p-5">
-      <Button className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white hover:bg-gradient-to-br focus:ring-blue-300 dark:focus:ring-blue-800">
-        Blue
-      </Button>
-      <Button className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white hover:bg-gradient-to-br focus:ring-green-300 dark:focus:ring-green-800">
-        Green
-      </Button>
-      <Button className="bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 text-white hover:bg-gradient-to-br focus:ring-cyan-300 dark:focus:ring-cyan-800">
-        Cyan
-      </Button>
-      <Button className="bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 text-white hover:bg-gradient-to-br focus:ring-teal-300 dark:focus:ring-teal-800">
-        Teal
-      </Button>
-      <Button className="bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 text-gray-900 hover:bg-gradient-to-br focus:ring-lime-300 dark:focus:ring-lime-800">
-        Lime
-      </Button>
-      <Button className="bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white hover:bg-gradient-to-br focus:ring-red-300 dark:focus:ring-red-800">
-        Red
-      </Button>
-      <Button className="bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 text-white hover:bg-gradient-to-br focus:ring-pink-300 dark:focus:ring-pink-800">
-        Pink
-      </Button>
-      <Button className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-white hover:bg-gradient-to-br focus:ring-purple-300 dark:focus:ring-purple-800">
-        Purple
-      </Button>
-    </div>
+    <>
+      <GsapCarouselLayout />
+      <div className="h-screen bg-gray-100 grid grid-cols-4 gap-4 mx-10 mt-20 p-5 cursor-pointer">
+        <img
+          ref={(el) => {
+            if (el) imgRefs.current[0] = el;
+          }} // Gắn ref cho hình ảnh đầu tiên
+          src="https://static.nutscdn.com/vimg/400-0/055875f8424f76d54b2a36feaa6edc07.jpg"
+          alt="Random"
+          className="rounded-xl shadow-xl"
+        />
+        <img
+          ref={(els_1) => {
+            if (els_1) imgRefs.current[1] = els_1;
+          }} // Gắn ref cho hình ảnh thứ hai
+          src="https://static.nutscdn.com/vimg/400-0/055875f8424f76d54b2a36feaa6edc07.jpg"
+          alt="Random"
+          className="rounded-xl shadow-xl"
+        />
+        <img
+          ref={(els_2) => {
+            if (els_2) imgRefs.current[2] = els_2;
+          }} // Gắn ref cho hình ảnh thứ hai
+          src="https://static.nutscdn.com/vimg/400-0/055875f8424f76d54b2a36feaa6edc07.jpg"
+          alt="Random"
+          className="rounded-xl shadow-xl"
+        />
+        <img
+          ref={(els_3) => {
+            if (els_3) imgRefs.current[3] = els_3;
+          }} // Gắn ref cho hình ảnh thứ hai
+          src="https://static.nutscdn.com/vimg/400-0/055875f8424f76d54b2a36feaa6edc07.jpg"
+          alt="Random"
+          className="rounded-xl shadow-xl"
+        />
+        {/* <div className="min-h-screen flex items-center justify-center bg-gray-100"> */}
+
+        {/* </div> */}
+      </div>
+    </>
   );
-}
+};
 
 export default App;
