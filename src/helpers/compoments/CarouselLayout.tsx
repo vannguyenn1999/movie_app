@@ -1,14 +1,23 @@
 import { useRef, useState } from "react";
 import { gsap } from "gsap";
 
-// const images = [
-//   "https://static.nutscdn.com/vimg/150-0/9ba596b8967e83efb593dede1641ad39.jpg",
-//   "https://static.nutscdn.com/vimg/150-0/34d52a3d2fff34e05addeb6a92014d28.jpg",
-//   "https://static.nutscdn.com/vimg/150-0/af35d59eb4f1a742c256e1e735e3b3c0.jpg",
-//   "https://static.nutscdn.com/vimg/150-0/9a44d00b6825dc9c8795880754f9cbd9.jpg",
-//   "https://static.nutscdn.com/vimg/150-0/d5f1f49673eb32f217afc9d77890db59.jpg",
-//   "https://static.nutscdn.com/vimg/150-0/d8f1215b7f715d255c94cd16c7dcfa95.jpg",
-// ];
+// https://static.nutscdn.com/vimg/1920-0/1ad24f4bee126126e72c54ad6f55f3b2.jpg
+// https://static.nutscdn.com/vimg/150-0/1ad24f4bee126126e72c54ad6f55f3b2.jpg
+
+// https://static.nutscdn.com/vimg/1920-0/9ba596b8967e83efb593dede1641ad39.jpg
+// https://static.nutscdn.com/vimg/150-0/9ba596b8967e83efb593dede1641ad39.jpg
+
+// https://static.nutscdn.com/vimg/1920-0/34d52a3d2fff34e05addeb6a92014d28.jpg
+// https://static.nutscdn.com/vimg/150-0/34d52a3d2fff34e05addeb6a92014d28.jpg
+
+// https://static.nutscdn.com/vimg/1920-0/197ee94ccf1dfdddc1c542388b701320.jpg
+// https://static.nutscdn.com/vimg/150-0/af35d59eb4f1a742c256e1e735e3b3c0.jpg
+
+// https://static.nutscdn.com/vimg/1920-0/9a44d00b6825dc9c8795880754f9cbd9.jpg
+// https://static.nutscdn.com/vimg/150-0/9a44d00b6825dc9c8795880754f9cbd9.jpg
+
+// https://static.nutscdn.com/vimg/1920-0/d5f1f49673eb32f217afc9d77890db59.jpg
+// https://static.nutscdn.com/vimg/150-0/d5f1f49673eb32f217afc9d77890db59.jpg
 
 const images = [
   {
@@ -84,11 +93,10 @@ const GsapCarouselLayout: React.FC = () => {
             key={index}
             src={image.ava}
             alt={`Thumbnail ${index}`}
-            className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${
-              index === current
-                ? "ring-4 ring-blue-500"
-                : "ring-2 ring-gray-300"
-            }`}
+            className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${index === current
+              ? "ring-4 ring-blue-500"
+              : "ring-2 ring-gray-300"
+              }`}
             onClick={() => changeBackground(index)} // Thay đổi ảnh nền khi click
           />
         ))}
