@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import GsapCarouselLayout from "./helpers/compoments/CarouselLayout";
+import InfiniteImageScroll from "./helpers/compoments/InfiniteImageScroll";
 
 const App = () => {
   const imgRefs = useRef<HTMLImageElement[]>([]); // Tạo mảng ref để quản lý nhiều hình ảnh
@@ -33,8 +34,8 @@ const App = () => {
     return () => {
       imgRefs.current.forEach((img) => {
         if (img) {
-          img.removeEventListener("mouseenter", () => {});
-          img.removeEventListener("mouseleave", () => {});
+          img.removeEventListener("mouseenter", () => { });
+          img.removeEventListener("mouseleave", () => { });
         }
       });
     };
@@ -80,6 +81,8 @@ const App = () => {
 
         {/* </div> */}
       </div>
+      <InfiniteImageScroll />
+
     </>
   );
 };
