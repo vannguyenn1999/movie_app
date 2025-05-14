@@ -1,15 +1,26 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-// import "assets/index.css";
-import "./assets/index.css";
-import App from "./App.tsx";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import axios from "axios";
+// import { Flowbite } from "flowbite-react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+
+import { setupAxios } from "./core/AuthHelpers";
+import "./assets/index.css";
+import PublicRouter from "./routers";
 gsap.registerPlugin(useGSAP);
+const queryClient = new QueryClient();
+setupAxios(axios);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      {/* <AuthProvider> */}
+      {/* <Flowbite> */}
+      <PublicRouter />
+      {/* </Flowbite> */}
+      {/* </AuthProvider> */}
+    </QueryClientProvider>
   </StrictMode>
 );
