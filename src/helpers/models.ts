@@ -46,10 +46,10 @@ export type MovieItem = {
   title: string
   slug: string
   created_at?: string;
-  category?: Category;
-  actor?: Actor;
-  country?: Country;
-  topic?: Topic;
+  category?: CategoryItem;
+  actor?: ActorItem;
+  country?: CountryItem;
+  topic?: TopicItem;
 };
 
 
@@ -80,7 +80,7 @@ export const CONFIG_UPLOAD_IMG = {
   headers: { "Content-Type": "multipart/form-data" },
 };
 
-export type Category = {
+export type CategoryItem = {
   id: number;
   name: string;
   slug?: string;
@@ -88,7 +88,7 @@ export type Category = {
   updated_at?: string;
 };
 
-export type Topic = {
+export type TopicItem = {
   id: number;
   title: string;
   slug?: string;
@@ -96,7 +96,7 @@ export type Topic = {
   updated_at?: string;
 };
 
-export type Country = {
+export type CountryItem = {
   id: number;
   name: string;
   slug?: string;
@@ -104,7 +104,7 @@ export type Country = {
   updated_at?: string;
 };
 
-export type Actor = {
+export type ActorItem = {
   id: number;
   name: string;
   image: string;

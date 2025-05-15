@@ -1,3 +1,20 @@
 @import "tailwindcss";
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../../.flowbite-react/class-list.json";
+
+
+.tag-imdb {
+    background-color: transparent;
+    border: 1px solid #f0d25c;
+    border-radius: .33rem;
+    color: #fff;
+    font-weight: 500;
+    cursor: default;
+    line-height: 24px;
+    font-size: 12px;
+    padding: 0 .4rem;
+    flex-shrink: 0;
+    display: inline-flex
+;
+    align-items: center;
+}
