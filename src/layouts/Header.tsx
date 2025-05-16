@@ -1,58 +1,55 @@
-import { getData } from "@/core/request";
-import { useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import type { MovieItem, CategoryItem } from "@/helpers/models";
 import { Link } from "react-router-dom";
+import { useListProvider } from "@/stores/ListProvider";
+import NavBarLayout from "./header/Navbar";
 
 const HeaderLayout = () => {
   const [current, setCurrent] = useState<number>(0); // Ảnh nền hiện tại
   const backgroundRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
 
-  const { isPending, data } = useQuery({
-    queryKey: [`MOVIE_HEADERS`],
-    queryFn: () => getData(`/movies/get-movies-header`),
-  });
+  const { dataHeader } = useListProvider();
+  const data: MovieItem[] = dataHeader as MovieItem[];
 
   const changeBackground = (index: number) => {
     if (index === current) return; // Nếu ảnh được chọn là ảnh hiện tại, không làm gì
     gsap.to(backgroundRef.current, {
-      opacity: 0, // Làm mờ ảnh hiện tại
-      duration: 0.1, // Thời gian làm mờ
-      onComplete: () => {
-        // Cập nhật ảnh nền sau khi làm mờ
-        setCurrent(index);
-        gsap.from(infoRef.current, {
-          x: -300,
-          duration: 1,
-        });
-
-        // Hiển thị ảnh mới
-        gsap.fromTo(
-          backgroundRef.current,
-          { opacity: 0 }, // Bắt đầu từ trạng thái mờ
-          { opacity: 1, duration: 0.1 } // Hiển thị ảnh mới từ từ
-        );
-      },
+      x: "-100%",
+      duration: 0.3,
+      ease: "power3.out",
     });
+
+    gsap.from(infoRef.current, {
+      x: -300,
+      duration: 1,
+    });
+
+    setCurrent(index);
   };
 
-  if (isPending) return <>Loding</>;
-
   return (
-    <div className="relative w-full h-screen bg-gray-100 overflow-hidden">
+    <div className="relative w-full h-screen overflow-hidden">
       {/* Ảnh nền */}
       <div
-        ref={backgroundRef}
-        className={`absolute top-0 left-0 w-full h-full bg-cover transition-opacity duration-1000 mask-radial-[100%_100%] mask-radial-from-95% mask-radial-at-top`}
+        className={`absolute inset-0 bg-cover mask-radial-[100%_100%] mask-radial-from-95% mask-radial-at-top`}
         style={{
-          backgroundImage: `url(${data[current].image})`,
+          backgroundImage: `url(${data[current]?.image})`,
           // backgroundSize: "contain", // Đảm bảo ảnh hiển thị đầy đủ mà không bị cắt
           backgroundRepeat: "no-repeat", // Không lặp lại ảnh
           //   backgroundPosition: "center", // Căn giữa ảnh
         }}
-      ></div>
+      >
+        <div
+          ref={backgroundRef}
+          className="absolute inset-0 bg-transparent z-50"
+        ></div>
+      </div>
+
+      <div className="fixed w-full px-16">
+        <NavBarLayout />
+      </div>
 
       {/* Danh sách ảnh nhỏ */}
       {/* <div className="relative z-10"> */}
@@ -96,16 +93,17 @@ const HeaderLayout = () => {
           className={`grid grid-cols-6 gap-4 mt-5`}
           // className={`grid grid-cols-6 gap-4 mt-9`}
         >
-          {data[current].category.map((item: CategoryItem) => (
-            <div
-              className="text-sm border-2 border-amber-50 px-1.5 rounded-lg cursor-pointer hover:border-amber-300"
-              key={item.id}
-            >
-              <span className="text-amber-50 flex justify-center hover:text-amber-300">
-                {item.name}
-              </span>
-            </div>
-          ))}
+          {Array.isArray(data[current]?.category) &&
+            data[current]?.category.map((item: CategoryItem) => (
+              <div
+                className="text-sm border-2 border-amber-50 px-1.5 rounded-lg cursor-pointer hover:border-amber-300"
+                key={item.id}
+              >
+                <span className="text-amber-50 flex justify-center hover:text-amber-300">
+                  {item.name}
+                </span>
+              </div>
+            ))}
         </div>
 
         <div className="w-100 mt-5">

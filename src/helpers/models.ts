@@ -13,12 +13,18 @@ export type QueryRequestContext = {
 };
 
 export type QueryRequestContext2 = {
-  state: string;
-  setState: Dispatch<SetStateAction<string>>;
-  dataSearch: string;
-  setDataSearch: Dispatch<SetStateAction<string>>;
-  numPage: number;
-  setNumPage: Dispatch<SetStateAction<number>>;
+  isPendingTopic: boolean,
+  dataTopic: TopicItem | [],
+
+  isPendingCategory: boolean,
+  dataCategory: CategoryItem | [],
+
+  isPendingCountry: boolean,
+  dataCountry: CountryItem | [],
+
+  isPendingHeader: boolean,
+  dataHeader: MovieItem | [],
+
 };
 
 export type PaginationType = {

@@ -3,13 +3,15 @@ import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
 // import { Flowbite } from "flowbite-react";
+
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-
+import { CSSPlugin } from "gsap/CSSPlugin";
 import { setupAxios } from "./core/AuthHelpers";
 import "./assets/index.css";
+
 import PublicRouter from "./routers";
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, CSSPlugin);
 const queryClient = new QueryClient();
 setupAxios(axios);
 
