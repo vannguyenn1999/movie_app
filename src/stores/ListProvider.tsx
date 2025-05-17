@@ -55,7 +55,7 @@ const ListProviderProvider: FC<WithChildren> = ({ children }) => {
     isPendingTopic ||
     isPendingHeader
   ) {
-    return <>Loading</>;
+    return <LoadingLayout />;
   }
 
   return (
