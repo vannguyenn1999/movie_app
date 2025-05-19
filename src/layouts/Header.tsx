@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { gsap } from "gsap";
-import type { MovieItem, CategoryItem } from "@/helpers/models";
 import { Link } from "react-router-dom";
+
+import type { MovieItem, CategoryItem } from "@/helpers/models";
 import { useListProvider } from "@/stores/ListProvider";
 import NavBarLayout from "./header/Navbar";
 
