@@ -1,9 +1,9 @@
 import { gsap } from "gsap/gsap-core";
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 import type { TopicItem } from "@/helpers/models";
 import { useListProvider } from "@/stores/ListProvider";
-import { Link } from "react-router-dom";
 
 const bgColors = [
   "bg-amber-300",
