@@ -1,16 +1,17 @@
 import { gsap } from "gsap/gsap-core";
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import type { TopicItem } from "@/helpers/models";
 import { useListProvider } from "@/stores/ListProvider";
+import { getRandomLightHexColor } from "@/helpers/functions";
 
 const TopicPage = () => {
 
-    const divRefs = useRef<HTMLDivElement[]>([]);
-    const { dataTopic } = useListProvider();
+  const divRefs = useRef<HTMLDivElement[]>([]);
+  const { dataTopic } = useListProvider();
 
-    useEffect(() => {
+  useEffect(() => {
     divRefs.current.forEach((img) => {
       if (img) {
         // Thêm sự kiện hover
@@ -38,23 +39,23 @@ const TopicPage = () => {
     return () => {
       divRefs.current.forEach((img) => {
         if (img) {
-          img.removeEventListener("mouseenter", () => {});
-          img.removeEventListener("mouseleave", () => {});
+          img.removeEventListener("mouseenter", () => { });
+          img.removeEventListener("mouseleave", () => { });
         }
       });
     };
   }, []);
 
-    return (
-        <>
+  return (
+    <>
       <div className="grid grid-cols-7 gap-5 px-16 py-36">
         {
-          Array.isArray(dataTopic) && dataTopic.map((item : TopicItem , index : number) => ( 
+          Array.isArray(dataTopic) && dataTopic.map((item: TopicItem, index: number) => (
             <div ref={(el) => {
-                  if (el) divRefs.current[index] = el;
-                }} key={item.id} className='p-5 rounded-lg cursor-pointer'
-            style={{ backgroundColor: getRandomLightHexColor()}}>
-            
+              if (el) divRefs.current[index] = el;
+            }} key={item.id} className='p-5 rounded-lg cursor-pointer'
+              style={{ backgroundColor: getRandomLightHexColor() }}>
+
               <span className="text-white font-bold">
                 {
                   item.title
@@ -66,8 +67,8 @@ const TopicPage = () => {
 
       </div>
 
-    <>
-    )
+    </>
+  )
 }
 
 export default TopicPage
