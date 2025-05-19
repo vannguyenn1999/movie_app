@@ -14,9 +14,9 @@ const MasterLayout = () => {
         <div>
           <Outlet />
         </div>
-        <div>
+        <>
           <FooterLayout />
-        </div>
+        </>
       </div>
     </ListProviderProvider>
   );
