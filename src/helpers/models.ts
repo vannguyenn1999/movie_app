@@ -120,4 +120,5 @@ export type ActorItem = {
   country?: string;
   created_at?: string;
   updated_at?: string;
+  slug?: string
 }

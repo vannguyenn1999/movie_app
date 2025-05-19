@@ -1,30 +1,26 @@
-import { useParams , Navigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useParams, Navigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
-import { getData } from '@/core/request';
-import type { MovieItem } from '@/helpers/models';
-import LoadingCompoment from '@/layouts/loading/Loading2';
-
-
+import { getData } from "@/core/request";
+import type { MovieItem } from "@/helpers/models";
+import LoadingCompoment from "@/compoments/loading/Loading2";
 
 const MoviePage = () => {
+  const { type, slug } = useParams();
+  const { isPending, data } = useQuery({
+    queryKey: [`MOVIE_ITEM_DETAIL_${slug}`],
+    queryFn: () => getData(`movies/?search=${slug}`),
+  });
 
-    const { type, slug } = useParams();
+  if (!type || !["chu-de", "the-loai", "quoc-gia"].includes(type)) {
+    return <Navigate to="/home" />;
+  }
 
-    if (!['chu-de', 'the-loai', 'quoc-gia'].includes(type)) {
-        return <Navigate to="/home" />;
-    }
+  if (isPending) return <LoadingCompoment />;
 
-    const { isPending, data } = useQuery<MovieItem>({
-        queryKey: [`MOVIE_ITEM_DETAIL_${slug}`],
-        queryFn: () => getData(`movies/?search=${slug}`),
-    });
+  console.log("data", data);
 
-    if (isPending) return <LoadingCompoment />
+  return <div className="w-full min-h-[700px]"></div>;
+};
 
-    return (
-        <></>
-    )
-}
-
-export default MoviePage
+export default MoviePage;

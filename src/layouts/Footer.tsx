@@ -11,7 +11,7 @@ import {
 import { BsFacebook, BsYoutube, BsInstagram, BsTwitter } from "react-icons/bs";
 
 const FooterLayout = () => {
- return (
+  return (
     <Footer container className="rounded-none">
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
@@ -44,7 +44,11 @@ const FooterLayout = () => {
         </div>
         <FooterDivider />
         <div className="w-full sm:flex sm:items-center sm:justify-between">
-          <FooterCopyright href="#" by="Web Phim" year={new Date().getFullYear()} />
+          <FooterCopyright
+            href="#"
+            by="Web Phim"
+            year={new Date().getFullYear()}
+          />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             <FooterIcon href="#" icon={BsFacebook} />
             <FooterIcon href="#" icon={BsInstagram} />

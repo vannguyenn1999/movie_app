@@ -7,7 +7,6 @@ import { useListProvider } from "@/stores/ListProvider";
 import { getRandomLightHexColor } from "@/helpers/functions";
 
 const TopicPage = () => {
-
   const divRefs = useRef<HTMLDivElement[]>([]);
   const { dataTopic } = useListProvider();
 
@@ -39,36 +38,33 @@ const TopicPage = () => {
     return () => {
       divRefs.current.forEach((img) => {
         if (img) {
-          img.removeEventListener("mouseenter", () => { });
-          img.removeEventListener("mouseleave", () => { });
+          img.removeEventListener("mouseenter", () => {});
+          img.removeEventListener("mouseleave", () => {});
         }
       });
     };
   }, []);
 
   return (
-    <>
-      <div className="grid grid-cols-7 gap-5 px-16 py-36">
-        {
-          Array.isArray(dataTopic) && dataTopic.map((item: TopicItem, index: number) => (
-            <div ref={(el) => {
-              if (el) divRefs.current[index] = el;
-            }} key={item.id} className='p-5 rounded-lg cursor-pointer'
-              style={{ backgroundColor: getRandomLightHexColor() }}>
-
-              <span className="text-white font-bold">
-                {
-                  item.title
-                }
-              </span>
+    <div className="h-[700px] py-40 px-16">
+      <h2 className="py-10 font-bold text-2xl text-white">Các chủ đề</h2>
+      <div className="grid grid-cols-7 gap-5  ">
+        {Array.isArray(dataTopic) &&
+          dataTopic.map((item: TopicItem, index: number) => (
+            <div
+              ref={(el) => {
+                if (el) divRefs.current[index] = el;
+              }}
+              key={item.id}
+              className="p-10 rounded-lg cursor-pointer"
+              style={{ backgroundColor: getRandomLightHexColor() }}
+            >
+              <span className="text-white font-bold">{item.title}</span>
             </div>
-          ))
-        }
-
+          ))}
       </div>
+    </div>
+  );
+};
 
-    </>
-  )
-}
-
-export default TopicPage
+export default TopicPage;

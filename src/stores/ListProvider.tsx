@@ -11,7 +11,7 @@ import type {
 } from "@/helpers/models";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/core/request";
-import LoadingLayout from "@/layouts/loading/Loading";
+import LoadingLayout from "@/compoments/loading/Loading";
 
 const ListProviderContext = createContext<QueryRequestContext2>({
   isPendingTopic: true,
