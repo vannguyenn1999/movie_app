@@ -1,14 +1,24 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import {lazy} from "react"
 
-import MasterLayout from "../layouts/MasterLayout";
-import TopicPage from "../compoments/TopicPage";
-import ActorPage from "../compoments/actor/ActorPage";
-import ActorDetailPage from "../compoments/actor/ActorDetailPage";
-import MoviePage from "../compoments/movie/MoviePage";
-import MovieDetailPage from "../compoments/movie/MovieDetailPage";
-import MovieWatchPage from "../compoments/movie/MovieWatchPage";
-import HomePage from "@/compoments/home/HomePage";
+// ? Admin
+import MasterLayoutAdmin from "@/layouts/admin/MasterLayoutAdmin";
+const ActorAdminPage = lazy(() => import('@/admin/actor/ActorAdminPage'))
+const CategoryAdminPage = lazy(() => import('@/admin/category/CategoryAdminPage'))
+const CountryAdminPage = lazy(() => import('@/admin/country/CountryAdminPage'))
+const MovieAdminPage = lazy(() => import('@/admin/movie/MovieAdminPage'))
+const TopicAdminPage = lazy(() => import('@/admin/topic/TopicAdminPage'))
+
+// ? User
+import MasterLayout from "@/layouts/user/MasterLayout";
+const TopicPage = lazy(() => import('@/compoments/actor/ActorDetailPage'))
+const ActorPage = lazy(() => import('@/compoments/topic/TopicPage'))
+const ActorDetailPage = lazy(() => import('@/compoments/actor/ActorPage'))
+const MoviePage = lazy(() => import('@/compoments/movie/MoviePage'))
+const MovieDetailPage = lazy(() => import('@/compoments/movie/MovieDetailPage'))
+const MovieWatchPage = lazy(() => import('@/compoments/movie/MovieWatchPage'))
+const HomePage = lazy(() => import('@/compoments/home/HomePage'))
 
 const PublicRouter = () => {
   return (
@@ -28,21 +38,26 @@ const PublicRouter = () => {
       />
       <BrowserRouter>
         <Routes>
+
+          {/* User */}
           <Route element={<MasterLayout />}>
-            <Route path="/*" element={<Navigate to="/home" />} />
             <Route path="/chu-de" element={<TopicPage />} />
             <Route path="/phim/:slug" element={<MovieDetailPage />} />
             <Route path="/xem-phim/:slug" element={<MovieWatchPage />} />
             <Route path="/home" element={<HomePage />} />
-
-            {/* <Route path="/chu-de/:slug" element={<TopicPage />} />
-            <Route path="/the-loai/:slug" element={<TopicPage />} />
-            <Route path="/quoc-gia/:slug" element={<TopicPage />} /> */}
-
             <Route path="/:type/:slug" element={<MoviePage />} />
-
             <Route path="/dien-vien" element={<ActorPage />} />
             <Route path="/dien-vien/:slug" element={<ActorDetailPage />} />
+            <Route path="/*" element={<Navigate to="/home" />} />
+          </Route>
+
+          {/* Admin */}
+          <Route path='/admin' element={<MasterLayoutAdmin />}>
+            <Route path="dien-vien" element={<ActorAdminPage />} />
+            <Route path="the-loai" element={<CategoryAdminPage />} />
+            <Route path="chu-de" element={<TopicAdminPage />} />
+            <Route path="quoc-gia" element={<CountryAdminPage />} />
+            <Route path="phim" element={<MovieAdminPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

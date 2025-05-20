@@ -59,9 +59,6 @@ export type MovieItem = {
 };
 
 
-
-
-
 // Initial Values
 export const initialQueryRequest: QueryRequestContext = {
   state: "",
@@ -121,4 +118,12 @@ export type ActorItem = {
   created_at?: string;
   updated_at?: string;
   slug?: string
+}
+
+
+export type ResponsiveData = {
+  count : number,
+  next : string | null,
+  pre : string | null,
+  results : MovieItem[] |  ActorItem [] | []
 }
