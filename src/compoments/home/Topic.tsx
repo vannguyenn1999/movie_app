@@ -62,17 +62,18 @@ const TopicLayout = () => {
         {(Array.isArray(dataTopic) ? dataTopic.slice(0, 5) : []).map(
           (item: TopicItem, index: number) => {
             return (
-              <div
-                ref={(el) => {
-                  if (el) divRefs.current[index] = el;
-                }}
-                className={`p-10 ${bgColors[index]} cursor-pointer rounded-xl `}
-                key={item.id}
-              >
-                <span className="flex justify-center items-center align-middle font-bold text-white text-xl">
-                  {item.title}
-                </span>
-              </div>
+              <Link to={`/chu-de/${item.slug}`} key={item.id}>
+                <div
+                  ref={(el) => {
+                    if (el) divRefs.current[index] = el;
+                  }}
+                  className={`p-10 ${bgColors[index]} cursor-pointer rounded-xl `}
+                >
+                  <span className="flex justify-center items-center align-middle font-bold text-white text-xl">
+                    {item.title}
+                  </span>
+                </div>
+              </Link>
             );
           }
         )}

@@ -4,6 +4,7 @@ import type { ActorItem } from "@/helpers/models";
 import { getData } from "@/core/request";
 import LoadingCompoment from "@/compoments/loading/Loading2";
 import { Link } from "react-router-dom";
+import ActorItemCompoment from "./ActorItem";
 
 const ActorPage = () => {
   const { isPending, data } = useQuery({
@@ -20,17 +21,7 @@ const ActorPage = () => {
       <div className="grid grid-cols-8 gap-3">
         {data.results.map((item: ActorItem) => (
           <Link to={`/dien-vien/${item.slug}`} key={item.id}>
-            <div className="relative">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-90 h-70 object-cover rounded-lg cursor-pointer bg-gray-600"
-              />
-              <div className="absolute bottom-0 left-0 w-full h-10 rounded-b-lg bg-gradient-to-t from-black/90 to-transparent"></div>
-              <div className="absolute bottom-0 w-full flex justify-center">
-                <span className="text-white text-center"> {item.name}</span>
-              </div>
-            </div>
+            <ActorItemCompoment name={item.name} image={item.image} />
           </Link>
         ))}
       </div>

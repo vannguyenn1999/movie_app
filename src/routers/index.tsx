@@ -1,24 +1,31 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import {lazy} from "react"
+import { lazy } from "react";
 
 // ? Admin
 import MasterLayoutAdmin from "@/layouts/admin/MasterLayoutAdmin";
-const ActorAdminPage = lazy(() => import('@/admin/actor/ActorAdminPage'))
-const CategoryAdminPage = lazy(() => import('@/admin/category/CategoryAdminPage'))
-const CountryAdminPage = lazy(() => import('@/admin/country/CountryAdminPage'))
-const MovieAdminPage = lazy(() => import('@/admin/movie/MovieAdminPage'))
-const TopicAdminPage = lazy(() => import('@/admin/topic/TopicAdminPage'))
+const ActorAdminPage = lazy(() => import("@/admin/actor/ActorAdminPage"));
+const CategoryAdminPage = lazy(
+  () => import("@/admin/category/CategoryAdminPage")
+);
+const CountryAdminPage = lazy(() => import("@/admin/country/CountryAdminPage"));
+const MovieAdminPage = lazy(() => import("@/admin/movie/MovieAdminPage"));
+const TopicAdminPage = lazy(() => import("@/admin/topic/TopicAdminPage"));
 
 // ? User
 import MasterLayout from "@/layouts/user/MasterLayout";
-const TopicPage = lazy(() => import('@/compoments/actor/ActorDetailPage'))
-const ActorPage = lazy(() => import('@/compoments/topic/TopicPage'))
-const ActorDetailPage = lazy(() => import('@/compoments/actor/ActorPage'))
-const MoviePage = lazy(() => import('@/compoments/movie/MoviePage'))
-const MovieDetailPage = lazy(() => import('@/compoments/movie/MovieDetailPage'))
-const MovieWatchPage = lazy(() => import('@/compoments/movie/MovieWatchPage'))
-const HomePage = lazy(() => import('@/compoments/home/HomePage'))
+const ActorDetailPage = lazy(
+  () => import("@/compoments/actor/ActorDetailPage")
+);
+const TopicPage = lazy(() => import("@/compoments/topic/TopicPage"));
+const ActorPage = lazy(() => import("@/compoments/actor/ActorPage"));
+
+const MoviePage = lazy(() => import("@/compoments/movie/MoviePage"));
+const MovieDetailPage = lazy(
+  () => import("@/compoments/movie/MovieDetailPage")
+);
+const MovieWatchPage = lazy(() => import("@/compoments/movie/MovieWatchPage"));
+const HomePage = lazy(() => import("@/compoments/home/HomePage"));
 
 const PublicRouter = () => {
   return (
@@ -51,7 +58,7 @@ const PublicRouter = () => {
           </Route>
 
           {/* Admin */}
-          <Route path='/admin' element={<MasterLayoutAdmin />}>
+          <Route path="/admin" element={<MasterLayoutAdmin />}>
             <Route path="dien-vien" element={<ActorAdminPage />} />
             <Route path="the-loai" element={<CategoryAdminPage />} />
             <Route path="chu-de" element={<TopicAdminPage />} />

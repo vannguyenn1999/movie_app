@@ -14,6 +14,8 @@ const MovieWatchPage = () => {
 
   if (isPending) return <LoadingCompoment />;
 
+  console.log("data", data);
+
   return <></>;
 };
 
