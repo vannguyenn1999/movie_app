@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import type { MovieItem, CategoryItem } from "@/helpers/models";
 import { useListProvider } from "@/stores/ListProvider";
 import TopicLayout from "@/compoments/home/Topic";
+import HomeMovie from "./HomeMovie";
 
 const HomePage = () => {
   const [current, setCurrent] = useState<number>(0); // Ảnh nền hiện tại
@@ -129,7 +130,19 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <TopicLayout />
+      
+      {/* Chủ để ở trang chủ */}
+      <>
+        <TopicLayout />
+      </>
+      {/* Chủ để ở trang chủ */}
+      
+      {/* Phim ở trang chủ */}
+      <>
+        <HomeMovie />
+      </>
+      {/* Phim ở trang chủ */}
+
     </>
   );
 };
