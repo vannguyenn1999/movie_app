@@ -7,7 +7,7 @@ const SidebarLayout = () => {
     const location = useLocation()
     return (
         <>
-            <Sidebar aria-label="Sidebar with logo branding example" >
+            <Sidebar aria-label="Sidebar with logo branding example" className="h-auto">
                 <SidebarLogo href="#" img="/favicon.svg" imgAlt="Flowbite logo">
                     Flowbite
                 </SidebarLogo>
