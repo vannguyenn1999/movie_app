@@ -38,8 +38,7 @@ const PublicRouter = () => {
       />
       <BrowserRouter>
         <Routes>
-
-          {/* User */}
+          {/* Public */}
           <Route element={<MasterLayout />}>
             <Route path="/chu-de" element={<TopicPage />} />
             <Route path="/phim/:slug" element={<MovieDetailPage />} />
@@ -58,6 +57,7 @@ const PublicRouter = () => {
             <Route path="chu-de" element={<TopicAdminPage />} />
             <Route path="quoc-gia" element={<CountryAdminPage />} />
             <Route path="phim" element={<MovieAdminPage />} />
+            <Route path="*" element={<Navigate to="/home" />} />
           </Route>
         </Routes>
       </BrowserRouter>
