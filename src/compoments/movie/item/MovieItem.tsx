@@ -1,8 +1,10 @@
 import type { FC } from "react";
 import { FaPlay, FaHeart, FaInfoCircle } from "react-icons/fa";
 import { Button } from "flowbite-react";
-import type { CategoryItem } from "@/helpers/models";
 import { Link } from "react-router-dom";
+
+import type { CategoryItem } from "@/helpers/models";
+import { convertTime } from "@/helpers/functions";
 
 type MovieItemProps = {
   id: number;
@@ -81,7 +83,7 @@ const MovieItemCompoment: FC<MovieItemProps> = ({
               </span>
 
               <span className="text-white text-sm bg-gray-700 rounded-xl px-5 py-1 mx-1">
-                {release_date}
+                {convertTime(release_date)}
               </span>
 
               <span className="text-white text-sm bg-gray-700 rounded-xl px-5 py-1 mx-1">
