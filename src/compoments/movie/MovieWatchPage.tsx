@@ -1,5 +1,8 @@
 import { useParams , Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { FaFlag, FaHeart, FaShare } from "react-icons/fa";
+
 
 import type { MovieItem } from "@/helpers/models";
 import { getData } from "@/core/request";
@@ -8,10 +11,12 @@ import MovidCardItemCompoment from "./item/MovieCardItem";
 
 const MovieWatchPage = () => {
   const { slug } = useParams();
+  const [cinemaMode, setCinemaMode] = useState(false);
   const { isPending, data } = useQuery<MovieItem>({
     queryKey: [`MOVIE_ITEM_WATCH_${slug}`],
     queryFn: () => getData(`movies/?search=${slug}`),
   });
+
 
   if (isPending) return <LoadingCompoment />;
 
@@ -19,17 +24,58 @@ const MovieWatchPage = () => {
 
   return (
     <>
-    <div className="bg-[#1f2029] container mx-auto">
-            {/* <div className="px-20 py-36 min-h-[1000px]">
+    <div className="bg-[#1f2029] container mx-auto min-h-[1000px] relative">
+           {cinemaMode && (
+                <div
+                    className="fixed inset-0 bg-black z-30"
+                />
+            )}
 
+            {/* Video section */}
+            {/* <div className={`my-10 rounded-xl ${cinemaMode ? "fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-5xl" : ""}`}> */}
+            <div className={`my-10 rounded-xl  relative shadow-lg z-50`}>
                 <iframe
                     src={DATA_TEST.video}
-                    className="rounded-lg w-full h-100%"
-                    // frameBorder="0"
+                    className="w-full rounded-t-xl"
+                    width="1920"
+                    height="1080"
                     allowFullScreen
                 />
+                <div className="min-h-[50px] bg-[#08080a]">
+                    <div className="flex justify-between items-center px-5 py-3 rounded-b-xl">
+                        <div className="flex items-center px-5">
+                            <div className="flex items-center text-white cursor-pointer py-2 px-3 rounded-lg hover:bg-gray-800" >
+                                <FaHeart />
+                                <span className="ms-2">
+                                    Yêu thích
+                                </span>
+                            </div>
+                            <div className="flex items-center text-white cursor-pointer py-2 px-3 rounded-lg hover:bg-gray-800" >
+                                <FaShare />
+                                <span className="ms-2">
+                                    Chia sẻ
+                                </span>
+                            </div>
+                            <div onClick={() => setCinemaMode(!cinemaMode)} className="flex items-center text-white cursor-pointer py-2 px-3 rounded-lg hover:bg-gray-800" >
+                                <div className="ms-2 flex items-center ">
+                                    Rạp phim
+                                    <span className="text-[10px] text-amber-500 ms-2 border border-amber-500 p-0.5 rounded-xl px-2">
+                                        {
+                                            cinemaMode ? "ON" : "OFF"
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-center cursor-pointer">
+                            <FaFlag className="text-white" />
+                            <span className="text-white ms-2">Báo lỗi</span>
+                        </div>
+                    </div>
+                </div>
+                {/* Nút đóng khi ở cinema mode */}
 
-            </div> */}
+            </div>
 
             <div className="grid grid-cols-3 gap-5">
                 <div className="col-span-2">
