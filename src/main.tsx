@@ -11,6 +11,7 @@ import { setupAxios } from "./core/AuthHelpers";
 import "./assets/index.css";
 
 import PublicRouter from "./routers";
+import { AuthProvider } from "./core/Auth";
 gsap.registerPlugin(useGSAP, CSSPlugin);
 const queryClient = new QueryClient();
 setupAxios(axios);
@@ -18,11 +19,11 @@ setupAxios(axios);
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      {/* <AuthProvider> */}
+      <AuthProvider>
       {/* <Flowbite> */}
       <PublicRouter />
       {/* </Flowbite> */}
-      {/* </AuthProvider> */}
+      </AuthProvider>
     </QueryClientProvider>
   </StrictMode>
 );

@@ -1,11 +1,12 @@
-import { Navbar, Button, TextInput } from "flowbite-react";
-import { HiOutlineSearch, HiOutlineUser } from "react-icons/hi";
+import { Navbar, TextInput } from "flowbite-react";
+import { HiOutlineSearch } from "react-icons/hi";
 import { FaCaretDown } from "react-icons/fa";
 import { Link , useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
 import type { CategoryItem, CountryItem, TopicItem } from "@/helpers/models";
 import { useListProvider } from "@/stores/ListProvider";
+import LoginCompoment from "@/compoments/login/LoginCompoment";
 
 const HeaderLayout = () => {
   const inputRefs = useRef<HTMLInputElement>(null);
@@ -121,10 +122,11 @@ const HeaderLayout = () => {
 
           <div className="flex-1">
             <div className="flex justify-end items-center">
-              <Button pill color="light">
+              {/* <Button pill color="light">
                 <HiOutlineUser />
                 Thành viên
-              </Button>
+              </Button> */}
+              <LoginCompoment />
             </div>
           </div>
         </div>
