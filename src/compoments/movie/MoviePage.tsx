@@ -7,7 +7,7 @@ import type { MovieItem } from "@/helpers/models";
 import LoadingCompoment from "@/compoments/loading/Loading2";
 import { useListProvider } from "@/stores/ListProvider";
 import { findNameBySlug } from "@/helpers/functions";
-import MovieItemCompoment from "./MovieItem";
+import MovieItemCompoment from "@/compoments/movie/item/MovieItem";
 
 const MoviePage = () => {
   const { type, slug } = useParams();

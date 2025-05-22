@@ -9,7 +9,7 @@ import ActorItemCompoment from "@/compoments/actor/ActorItem";
 import type { ActorItem, MovieItem } from "@/helpers/models";
 import LoadingCompoment from "@/compoments/loading/Loading2";
 import { getData } from "@/core/request";
-import MovieItemCompoment from "../MovieItem";
+import MovieItemCompoment from "@/compoments/movie/item/MovieItem";
 
 type TagItemProps = {
   dataActor: [];

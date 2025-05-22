@@ -10,7 +10,7 @@ const CategoryAdminPage = lazy(
 );
 const CountryAdminPage = lazy(() => import("@/admin/country/CountryAdminPage"));
 const MovieAdminPage = lazy(() => import("@/admin/movie/MovieAdminPage"));
-const TopicAdminPage = lazy(() => import("@/admin/topic/TopicAdminPage")); SearchPage
+const TopicAdminPage = lazy(() => import("@/admin/topic/TopicAdminPage"));
 
 // ? User
 import MasterLayout from "@/layouts/user/MasterLayout";
@@ -27,7 +27,6 @@ const MovieDetailPage = lazy(
 const MovieWatchPage = lazy(() => import("@/compoments/movie/MovieWatchPage"));
 const HomePage = lazy(() => import("@/compoments/home/HomePage"));
 const SearchPage = lazy(() => import("@/compoments/search/SearchPage"));
-
 
 const PublicRouter = () => {
   return (
@@ -56,7 +55,7 @@ const PublicRouter = () => {
             <Route path="/:type/:slug" element={<MoviePage />} />
             <Route path="/dien-vien" element={<ActorPage />} />
             <Route path="/dien-vien/:slug" element={<ActorDetailPage />} />
-            <Route path="/tim-kiem/:slug" element={<SearchPage />} /> 
+            <Route path="/tim-kiem/:slug" element={<SearchPage />} />
             <Route path="/*" element={<Navigate to="/home" />} />
           </Route>
 

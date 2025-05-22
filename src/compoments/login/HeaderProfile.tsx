@@ -2,11 +2,11 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { HiOutlineLogout , HiFilm } from "react-icons/hi";
+import { HiOutlineLogout, HiFilm } from "react-icons/hi";
 
 import { useAuth } from "@/core/Auth";
 
-const  HeaderProfile = () => {
+const HeaderProfile = () => {
   const { auth, logout } = useAuth();
 
   const handleLogout = () => {
@@ -34,7 +34,7 @@ const  HeaderProfile = () => {
   return (
     <Menu as="div" className="relative">
       <div>
-        <MenuButton className="inline-flex w-full justify-center gap-x-1.5 px-3 py-2 cursor-pointer">
+        <MenuButton className="inline-flex w-full justify-center gap-x-1.5 p-2 cursor-pointer me-5 rounded-full bg-gray-300 ring-0 focus:ring-0">
           <span className="sr-only">Thông tin cá nhân</span>
           <img
             className="w-8 h-8 rounded-full"
@@ -46,7 +46,7 @@ const  HeaderProfile = () => {
 
       <MenuItems
         transition
-        className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+        className="absolute right-10 z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
       >
         <div className="py-1">
           <MenuItem>
@@ -74,6 +74,6 @@ const  HeaderProfile = () => {
       </MenuItems>
     </Menu>
   );
-}
+};
 
-export default HeaderProfile
+export default HeaderProfile;

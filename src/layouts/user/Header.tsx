@@ -1,22 +1,27 @@
 import { Navbar, TextInput } from "flowbite-react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { FaCaretDown } from "react-icons/fa";
-import { Link , useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
 import type { CategoryItem, CountryItem, TopicItem } from "@/helpers/models";
 import { useListProvider } from "@/stores/ListProvider";
 import LoginCompoment from "@/compoments/login/LoginCompoment";
+import { useAuth } from "@/core/Auth";
+import HeaderProfile from "@/compoments/login/HeaderProfile";
 
 const HeaderLayout = () => {
   const inputRefs = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const { dataCategory, dataCountry, dataTopic } = useListProvider();
+  const { auth } = useAuth();
+
+  console.log("auth", auth);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      navigate(`/tim-kiem/${inputRefs?.current?.value}`);
-    };
+    e.preventDefault();
+    navigate(`/tim-kiem/${inputRefs?.current?.value}`);
+  };
 
   return (
     <>
@@ -34,16 +39,17 @@ const HeaderLayout = () => {
               {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
                 Flowbite
               </span> */}
-               <form onSubmit={handleSearch} className="flex items-center">
+              <form onSubmit={handleSearch} className="flex items-center">
                 <div className="max-w-xl ps-5">
                   <TextInput
+                    ref={inputRefs}
                     id="search"
                     type="text"
                     icon={HiOutlineSearch}
                     placeholder="Tìm kiếm phim , diễn viên"
                   />
                 </div>
-               </form>
+              </form>
             </div>
           </div>
 
@@ -126,7 +132,7 @@ const HeaderLayout = () => {
                 <HiOutlineUser />
                 Thành viên
               </Button> */}
-              <LoginCompoment />
+              {auth ? <HeaderProfile /> : <LoginCompoment />}
             </div>
           </div>
         </div>
