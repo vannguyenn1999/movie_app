@@ -14,6 +14,7 @@ const TopicAdminPage = lazy(() => import("@/admin/topic/TopicAdminPage"));
 
 // ? User
 import MasterLayout from "@/layouts/user/MasterLayout";
+import { useAuth } from "@/core/Auth";
 const ActorDetailPage = lazy(
   () => import("@/compoments/actor/ActorDetailPage")
 );
@@ -29,6 +30,7 @@ const HomePage = lazy(() => import("@/compoments/home/HomePage"));
 const SearchPage = lazy(() => import("@/compoments/search/SearchPage"));
 
 const PublicRouter = () => {
+  const { auth } = useAuth();
   return (
     <>
       <ToastContainer
@@ -60,14 +62,16 @@ const PublicRouter = () => {
           </Route>
 
           {/* Admin */}
-          <Route path="/admin" element={<MasterLayoutAdmin />}>
-            <Route path="dien-vien" element={<ActorAdminPage />} />
-            <Route path="the-loai" element={<CategoryAdminPage />} />
-            <Route path="chu-de" element={<TopicAdminPage />} />
-            <Route path="quoc-gia" element={<CountryAdminPage />} />
-            <Route path="phim" element={<MovieAdminPage />} />
-            <Route path="*" element={<Navigate to="/home" />} />
-          </Route>
+          {auth && (
+            <Route path="/admin" element={<MasterLayoutAdmin />}>
+              <Route path="dien-vien" element={<ActorAdminPage />} />
+              <Route path="the-loai" element={<CategoryAdminPage />} />
+              <Route path="chu-de" element={<TopicAdminPage />} />
+              <Route path="quoc-gia" element={<CountryAdminPage />} />
+              <Route path="phim" element={<MovieAdminPage />} />
+              <Route path="*" element={<Navigate to="/home" />} />
+            </Route>
+          )}
         </Routes>
       </BrowserRouter>
     </>

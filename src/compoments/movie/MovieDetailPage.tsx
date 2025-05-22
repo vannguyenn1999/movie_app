@@ -66,7 +66,7 @@ const MovieDetailPage = () => {
             {data?.results[0]?.category.map((category: CategoryItem) => (
               <span
                 key={category.id}
-                className="text-white text-sm bg-gray-700 rounded-full px-2 py-1 me-2"
+                className="text-white text-[10px] xl:text-[12px] bg-gray-700 rounded-full px-2 py-1 me-2"
               >
                 {category.name}
               </span>
@@ -114,12 +114,14 @@ const MovieDetailPage = () => {
         <div className="col-span-3 px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start">
-              <button className="py-3 px-6 rounded-xl bg-amber-300 cursor-pointer hover:shadow-xl/30 hover:shadow-amber-500/50 hover:bg-amber-400 transition-all duration-300 flex items-center justify-center">
-                <FaPlay />
-                <span className="ms-2 text-gray-800 font-semibold">
-                  Xem ngay
-                </span>
-              </button>
+              <Link to={`/xem-phim/${slug}`}>
+                <button className="py-3 px-6 rounded-xl bg-amber-300 cursor-pointer hover:shadow-xl/30 hover:shadow-amber-500/50 hover:bg-amber-400 transition-all duration-300 flex items-center justify-center">
+                  <FaPlay />
+                  <span className="ms-2 text-gray-800 font-semibold">
+                    Xem ngay
+                  </span>
+                </button>
+              </Link>
 
               <div className="text-white rounded-xl hover:bg-gray-700 py-2 px-3 cursor-pointer ms-20">
                 <div className="flex items-center justify-center pb-1">

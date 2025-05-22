@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaFlag, FaHeart, FaShare } from "react-icons/fa";
 
-import type { ActorItem, MovieItem } from "@/helpers/models";
+import type { ActorItem, CategoryItem, MovieItem } from "@/helpers/models";
 import { getData } from "@/core/request";
 import LoadingCompoment from "@/compoments/loading/Loading2";
 import MovidCardItemCompoment from "./item/MovieCardItem";
@@ -16,9 +16,23 @@ const MovieWatchPage = () => {
     queryFn: () => getData(`movies/?search=${slug}`),
   });
 
+  const { isPending: isPendingSuggestion, data: dataSuggestion } =
+    useQuery<MovieItem>({
+      queryKey: [`ACTOR_SUGGESTION_${slug}`],
+      queryFn: () => {
+        let words = "";
+        data?.results[0].category.map(
+          (item: CategoryItem) => (words += item.slug + ",")
+        );
+        return getData(`movies/get-suggestion-movie/?category=${words}`);
+      },
+      enabled: !!data?.results[0],
+    });
+
   if (isPending) return <LoadingCompoment />;
 
-  console.log("data", data);
+  // console.log("dataSuggestion", dataSuggestion);
+  console.log("data", data?.results[0].video);
 
   return (
     <>
@@ -30,9 +44,11 @@ const MovieWatchPage = () => {
         <div className={`my-10 rounded-xl  relative shadow-lg z-50`}>
           <video
             src={data?.results[0].video}
+            // src="http://127.0.0.1:8000/media/videos/1555540928584381-.mp4"
             className="w-full rounded-t-xl"
             width="1920"
             height="1080"
+            controls
             // allowFullScreen
           />
           <div className="min-h-[50px] bg-[#08080a]">
@@ -112,20 +128,27 @@ const MovieWatchPage = () => {
             <h2 className="text-white font-bold mb-5 text-xl">
               Đề xuất cho bạn
             </h2>
-            {/* <div>
-              {data?.results[0].map((item: MovieItem) => (
-                <Link to={`/phim/${item.slug}`} key={item.id}>
-                  <div className="mb-2">
-                    <MovidCardItemCompoment
-                      image={item.image ? item.image : ""}
-                      title={item.title}
-                      release_date={item.release_date}
-                      duration={item.duration}
-                    />
-                  </div>
-                </Link>
-              ))}
-            </div> */}
+            <div>
+              {isPendingSuggestion ? (
+                <LoadingCompoment />
+              ) : (
+                <div className="grid grid-rows-1 gap-4 py-5">
+                  {Array.isArray(dataSuggestion) &&
+                    dataSuggestion.map((item: MovieItem) => {
+                      return (
+                        <Link to={`/phim/${item.slug}`} key={item.id}>
+                          <MovidCardItemCompoment
+                            image={item.image ? item.image : ""}
+                            title={item.title}
+                            release_date={item.release_date}
+                            duration={item.duration}
+                          />
+                        </Link>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

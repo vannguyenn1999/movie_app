@@ -5,10 +5,10 @@ import Swal from "sweetalert2";
 import { HiOutlineLogout, HiFilm } from "react-icons/hi";
 
 import { useAuth } from "@/core/Auth";
+import { Avatar } from "flowbite-react";
 
 const HeaderProfile = () => {
-  const { auth, logout } = useAuth();
-
+  const { logout } = useAuth();
   const handleLogout = () => {
     try {
       return Swal.fire({
@@ -33,16 +33,14 @@ const HeaderProfile = () => {
 
   return (
     <Menu as="div" className="relative">
-      <div>
-        <MenuButton className="inline-flex w-full justify-center gap-x-1.5 p-2 cursor-pointer me-5 rounded-full bg-gray-300 ring-0 focus:ring-0">
-          <span className="sr-only">Thông tin cá nhân</span>
-          <img
-            className="w-8 h-8 rounded-full"
-            src={auth?.user?.image}
-            alt="user photo"
-          />
-        </MenuButton>
-      </div>
+      <MenuButton className="inline-flex w-full justify-center gap-x-1.5 cursor-pointer me-5 rounded-full ring-0 focus:ring-0 hover: ring-0 focus:outline-none ">
+        <span className="sr-only">Thông tin cá nhân</span>
+        <Avatar
+          img="https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg"
+          alt="avatar of Jese"
+          rounded
+        />
+      </MenuButton>
 
       <MenuItems
         transition
@@ -50,12 +48,12 @@ const HeaderProfile = () => {
       >
         <div className="py-1">
           <MenuItem>
-            <Link to={"/admin/movie"}>
+            <Link to={"/admin/phim"}>
               <button
                 type="button"
                 className="flex items-center cursor-pointer w-full px-4 py-2 text-left text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
               >
-                <HiFilm />
+                <HiFilm className="me-1 text-md" />
                 Quản lý
               </button>
             </Link>
@@ -66,7 +64,7 @@ const HeaderProfile = () => {
               type="button"
               className="flex items-center cursor-pointer w-full px-4 py-2 text-left text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
             >
-              <HiOutlineLogout />
+              <HiOutlineLogout className="me-1 text-md" />
               Đăng xuất
             </button>
           </MenuItem>

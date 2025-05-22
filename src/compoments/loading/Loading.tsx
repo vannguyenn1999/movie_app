@@ -14,8 +14,11 @@ const LoadingLayout = () => {
 
   return (
     <div className="bg-[#1f2029] w-full">
-      <div className="flex justify-center items-center h-screen" ref={boxRef}>
-        <div className="grid grid-rows-2">
+      <div
+        className="flex justify-center items-center h-screen m-auto"
+        ref={boxRef}
+      >
+        <div className="grid grid-rows-2 h-screen m-auto">
           <div className="flex justify-center items-center">
             <img
               src="https://images.seeklogo.com/logo-png/22/2/garuda-pancasila-logo-png_seeklogo-229617.png"
