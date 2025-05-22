@@ -1,13 +1,21 @@
-import type { CategoryItem, CountryItem, TopicItem } from "@/helpers/models";
-import { useListProvider } from "@/stores/ListProvider";
 import { Navbar, Button, TextInput } from "flowbite-react";
-
 import { HiOutlineSearch, HiOutlineUser } from "react-icons/hi";
 import { FaCaretDown } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
+import { useRef } from "react";
+
+import type { CategoryItem, CountryItem, TopicItem } from "@/helpers/models";
+import { useListProvider } from "@/stores/ListProvider";
 
 const HeaderLayout = () => {
+  const inputRefs = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
   const { dataCategory, dataCountry, dataTopic } = useListProvider();
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      navigate(`/tim-kiem/${inputRefs?.current?.value}`);
+    };
 
   return (
     <>
@@ -25,14 +33,16 @@ const HeaderLayout = () => {
               {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
                 Flowbite
               </span> */}
-              <div className="max-w-xl ps-5">
-                <TextInput
-                  id="email4"
-                  type="email"
-                  icon={HiOutlineSearch}
-                  placeholder="Tìm kiếm phim , diễn viên"
-                />
-              </div>
+               <form onSubmit={handleSearch} className="flex items-center">
+                <div className="max-w-xl ps-5">
+                  <TextInput
+                    id="search"
+                    type="text"
+                    icon={HiOutlineSearch}
+                    placeholder="Tìm kiếm phim , diễn viên"
+                  />
+                </div>
+               </form>
             </div>
           </div>
 
