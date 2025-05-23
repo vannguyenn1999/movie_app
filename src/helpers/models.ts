@@ -25,7 +25,17 @@ export type QueryRequestContext2 = {
   isPendingHeader: boolean,
   dataHeader: MovieItem | [],
 
+  refetchTopic: () => void,
+  refetchCategory: () => void,
+  refetchCountry: () => void,
+
 };
+
+export type ListViewContextProps = {
+  selected: Array<ID>
+  itemIdForUpdate?: ID
+  setItemIdForUpdate: Dispatch<SetStateAction<ID>>
+}
 
 export type PaginationType = {
   previous: string;
@@ -52,6 +62,7 @@ export type MovieItem = {
   title: string
   slug: string
   created_at?: string;
+  updated_at?: string;
   category?: CategoryItem;
   actor?: ActorItem;
   country?: CountryItem;
@@ -122,8 +133,8 @@ export type ActorItem = {
 
 
 export type ResponsiveData = {
-  count : number,
-  next : string | null,
-  pre : string | null,
-  results : MovieItem[] |  ActorItem [] | []
+  count: number,
+  next: string | null,
+  pre: string | null,
+  results: MovieItem[] | ActorItem[] | []
 }

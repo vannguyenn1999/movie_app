@@ -18,10 +18,10 @@ import { Link, useLocation } from "react-router-dom";
 const SidebarLayout = () => {
   const location = useLocation();
   return (
-    <>
+    <div className="rounded-none">
       <Sidebar
         aria-label="Sidebar with logo branding example"
-        className="h-auto"
+        className="min-h-screen rounded-none"
       >
         <SidebarLogo href="#" img="/favicon.svg" imgAlt="Flowbite logo">
           Flowbite
@@ -79,7 +79,7 @@ const SidebarLayout = () => {
           </SidebarItemGroup>
         </SidebarItems>
       </Sidebar>
-    </>
+    </div>
   );
 };
 

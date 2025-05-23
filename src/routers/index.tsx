@@ -13,7 +13,7 @@ const MovieAdminPage = lazy(() => import("@/admin/movie/MovieAdminPage"));
 const TopicAdminPage = lazy(() => import("@/admin/topic/TopicAdminPage"));
 
 // ? User
-import MasterLayout from "@/layouts/user/MasterLayout";
+import MasterLayout from "@/layouts/public/MasterLayout";
 import { useAuth } from "@/core/Auth";
 const ActorDetailPage = lazy(
   () => import("@/compoments/actor/ActorDetailPage")
