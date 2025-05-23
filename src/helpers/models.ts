@@ -32,9 +32,20 @@ export type QueryRequestContext2 = {
 };
 
 export type ListViewContextProps = {
-  selected: Array<ID>
-  itemIdForUpdate?: ID
-  setItemIdForUpdate: Dispatch<SetStateAction<ID>>
+  itemIdMovieForUpdate: ID
+  setItemIdMovieForUpdate: Dispatch<SetStateAction<ID>>
+
+  itemIdCategoryForUpdate: ID
+  setItemIdCategoryForUpdate: Dispatch<SetStateAction<ID>>
+
+  itemIdTopicForUpdate: ID
+  setItemIdTopicForUpdate: Dispatch<SetStateAction<ID>>
+
+  itemIdCountryForUpdate: ID
+  setItemIdCountryForUpdate: Dispatch<SetStateAction<ID>>
+
+  itemIdActorForUpdate: ID
+  setItemIdActorForUpdate: Dispatch<SetStateAction<ID>>
 }
 
 export type PaginationType = {

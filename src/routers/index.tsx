@@ -2,6 +2,10 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { lazy } from "react";
 
+import { useAuth } from "@/core/Auth";
+import { ListProviderProvider } from "@/stores/ListProvider";
+import { ListProviderProviderAdmin } from "@/stores/ListProviderAdmin";
+
 // ? Admin
 import MasterLayoutAdmin from "@/layouts/admin/MasterLayoutAdmin";
 const ActorAdminPage = lazy(() => import("@/admin/actor/ActorAdminPage"));
@@ -14,7 +18,7 @@ const TopicAdminPage = lazy(() => import("@/admin/topic/TopicAdminPage"));
 
 // ? User
 import MasterLayout from "@/layouts/public/MasterLayout";
-import { useAuth } from "@/core/Auth";
+
 const ActorDetailPage = lazy(
   () => import("@/compoments/actor/ActorDetailPage")
 );
@@ -46,34 +50,38 @@ const PublicRouter = () => {
         pauseOnHover
         theme="colored"
       />
-      <BrowserRouter>
-        <Routes>
-          {/* Public */}
-          <Route element={<MasterLayout />}>
-            <Route path="/chu-de" element={<TopicPage />} />
-            <Route path="/phim/:slug" element={<MovieDetailPage />} />
-            <Route path="/xem-phim/:slug" element={<MovieWatchPage />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/:type/:slug" element={<MoviePage />} />
-            <Route path="/dien-vien" element={<ActorPage />} />
-            <Route path="/dien-vien/:slug" element={<ActorDetailPage />} />
-            <Route path="/tim-kiem/:slug" element={<SearchPage />} />
-            <Route path="/*" element={<Navigate to="/home" />} />
-          </Route>
+      <ListProviderProvider>
+        <ListProviderProviderAdmin>
+          <BrowserRouter>
+            <Routes>
+              {/* Public */}
+              <Route element={<MasterLayout />}>
+                <Route path="/chu-de" element={<TopicPage />} />
+                <Route path="/phim/:slug" element={<MovieDetailPage />} />
+                <Route path="/xem-phim/:slug" element={<MovieWatchPage />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/:type/:slug" element={<MoviePage />} />
+                <Route path="/dien-vien" element={<ActorPage />} />
+                <Route path="/dien-vien/:slug" element={<ActorDetailPage />} />
+                <Route path="/tim-kiem/:slug" element={<SearchPage />} />
+                <Route path="/*" element={<Navigate to="/home" />} />
+              </Route>
 
-          {/* Admin */}
-          {auth && (
-            <Route path="/admin" element={<MasterLayoutAdmin />}>
-              <Route path="dien-vien" element={<ActorAdminPage />} />
-              <Route path="the-loai" element={<CategoryAdminPage />} />
-              <Route path="chu-de" element={<TopicAdminPage />} />
-              <Route path="quoc-gia" element={<CountryAdminPage />} />
-              <Route path="phim" element={<MovieAdminPage />} />
-              <Route path="*" element={<Navigate to="/home" />} />
-            </Route>
-          )}
-        </Routes>
-      </BrowserRouter>
+              {/* Admin */}
+              {auth && (
+                <Route path="/admin" element={<MasterLayoutAdmin />}>
+                  <Route path="dien-vien" element={<ActorAdminPage />} />
+                  <Route path="the-loai" element={<CategoryAdminPage />} />
+                  <Route path="chu-de" element={<TopicAdminPage />} />
+                  <Route path="quoc-gia" element={<CountryAdminPage />} />
+                  <Route path="phim" element={<MovieAdminPage />} />
+                  <Route path="*" element={<Navigate to="/home" />} />
+                </Route>
+              )}
+            </Routes>
+          </BrowserRouter>
+        </ListProviderProviderAdmin>
+      </ListProviderProvider>
     </>
   );
 };

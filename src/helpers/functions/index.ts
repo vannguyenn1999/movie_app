@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import type { Dispatch, SetStateAction } from "react";
+import type { ID } from "../models";
+
 const getRandomLightHexColor = () => {
   // Tạo màu sáng bằng cách random RGB từ 128 đến 255 (vì 0–127 thường là màu tối)
   const getComponent = () => Math.floor(Math.random() * 128) + 128;
@@ -9,7 +12,7 @@ const getRandomLightHexColor = () => {
   const b = getComponent();
 
   // Chuyển sang hex và pad nếu cần
-  const toHex = c => c.toString(16).padStart(2, '0');
+  const toHex = (c: number) => c.toString(16).padStart(2, '0');
 
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
@@ -48,7 +51,25 @@ const formatDate = (isoString: string): string => {
 };
 
 const isNotEmpty = (obj: unknown) => {
-  return obj !== undefined && obj !== null && obj !== ''
+  return obj !== undefined && obj !== null && obj !== '' && obj !== 0
 }
 
-export { getRandomLightHexColor, convertTime, findNameBySlug, formatDate, isNotEmpty }
+const groupingOnSelect = (
+  id: ID,
+  selected: Array<ID>,
+  setSelected: Dispatch<SetStateAction<Array<ID>>>
+) => {
+  if (!id) {
+    return;
+  }
+
+  if (selected.includes(id)) {
+    setSelected(selected.filter((itemId) => itemId !== id));
+  } else {
+    const updatedSelected = [...selected];
+    updatedSelected.push(id);
+    setSelected(updatedSelected);
+  }
+};
+
+export { getRandomLightHexColor, convertTime, findNameBySlug, formatDate, isNotEmpty, groupingOnSelect }
