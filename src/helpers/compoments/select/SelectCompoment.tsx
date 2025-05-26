@@ -16,6 +16,11 @@ const SelectCompoment = () => {
     const [inputValue, setInputValue] = useState(""); // Lưu giá trị input
     const debouncedSearchTerm = useDebounce(inputValue, 200);
 
+    useEffect(() => {
+        fetchOptions(1);
+        setPage(1);
+    }, [debouncedSearchTerm]);
+
     const fetchOptions = async (pageNumber: number) => {
         const res = await getData(`/?page=${pageNumber}&search=${debouncedSearchTerm}`);
         const newData = await res.json();
@@ -26,14 +31,14 @@ const SelectCompoment = () => {
         setOptions((prev) => pageNumber === 1 ? dataLabel : [...prev, ...dataLabel]);
     };
 
-    useEffect(() => {
-        fetchOptions(1);
-        setPage(1);
-    }, [debouncedSearchTerm]);
-
+    
     const handleInputChange = (value: string) => {
         setInputValue(value);
     };
+
+    const handleOnChangeData = (data : {value : string , label : string}) => {
+        console.log("dataaaa", data);
+    }
 
     const handleLoadMore = useCallback(() => {
         if (isLoadingMore) return;
@@ -50,6 +55,7 @@ const SelectCompoment = () => {
             options={options}
             onInputChange={handleInputChange}
             components={{ MenuList: (props) => <CustomMenuList {...props} onLoadMore={handleLoadMore} /> }}
+            onChange={handleOnChangeData}
         />
     );
 };
