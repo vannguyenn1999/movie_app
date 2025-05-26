@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import Select from "react-select";
+import makeAnimated from 'react-select/animated';
+import { Avatar } from "flowbite-react";
 
 import { useDebounce } from "@/helpers/hook";
 import CustomMenuList from "./CustomMenuList";
@@ -7,6 +9,8 @@ import type { ActorItem } from "@/helpers/models";
 
 
 type OptionType = { label: string; value: string };
+const animatedComponents = makeAnimated();
+
 
 const SelectCompoment = () => {
     const [options, setOptions] = useState<OptionType[]>([]);
@@ -25,8 +29,16 @@ const SelectCompoment = () => {
         const res = await getData(`/?page=${pageNumber}&search=${debouncedSearchTerm}`);
         const newData = await res.json();
         const dataLabel = newData.results.map((item : ActorItem) => ({
-            label: item.slug,
-            value: item.name
+            value: item.slug,
+            label: (
+                <div className="flex justify-start items-center">
+                    <Avatar img={item.image} rounded>
+                        <div className="space-y-1 text-sm text-gray-800">
+                            <div>{item.email}</div>
+                        </div>
+                    </Avatar>
+                </div>
+            )
         }));
         setOptions((prev) => pageNumber === 1 ? dataLabel : [...prev, ...dataLabel]);
     };
@@ -54,8 +66,9 @@ const SelectCompoment = () => {
         <Select
             options={options}
             onInputChange={handleInputChange}
-            components={{ MenuList: (props) => <CustomMenuList {...props} onLoadMore={handleLoadMore} /> }}
+            components={{ ...animatedComponents ,MenuList: (props) => <CustomMenuList {...props} onLoadMore={handleLoadMore} /> }}
             onChange={handleOnChangeData}
+            className="w-auto"
             isMulti
         />
     );
