@@ -56,6 +56,7 @@ const SelectCompoment = () => {
             onInputChange={handleInputChange}
             components={{ MenuList: (props) => <CustomMenuList {...props} onLoadMore={handleLoadMore} /> }}
             onChange={handleOnChangeData}
+            isMulti
         />
     );
 };
