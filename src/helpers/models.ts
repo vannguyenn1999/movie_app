@@ -134,7 +134,7 @@ export type ActorItem = {
   name: string;
   image: string;
   info?: string;
-  birthday?: string;
+  birthday?: string | Date;
   gender?: string;
   country?: string;
   created_at?: string;

@@ -16,7 +16,7 @@ const ActorWrapperModal = () => {
   });
 
   if (!itemIdActorForUpdate) {
-    return <ActorEditModalForm actor={{ id: 0, name: "" }} />;
+    return <ActorEditModalForm actor={{ id: 0, name: "", image: "" }} />;
   }
 
   if (!isPending && data) {

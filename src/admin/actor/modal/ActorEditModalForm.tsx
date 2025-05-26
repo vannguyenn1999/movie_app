@@ -2,15 +2,27 @@ import { useState, type FC } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import clsx from "clsx";
-import { Button, Label, Spinner, TextInput , Datepicker } from "flowbite-react";
+import {
+  Button,
+  Label,
+  Spinner,
+  TextInput,
+  Datepicker,
+  FileInput,
+  Textarea,
+  Select,
+} from "flowbite-react";
+import { toast } from "react-toastify";
 import { FaSave } from "react-icons/fa";
 
 import type { ActorItem } from "@/helpers/models";
 import { useListProvider } from "@/stores/ListProvider";
 import { isNotEmpty } from "@/helpers/functions";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
-import { createData, updateData } from "@/core/request";
-import { toast } from "react-toastify";
+import { createData2, updateData2 } from "@/core/request";
+import { useImagePreview } from "@/helpers/hook";
+import { HiOutlineXCircle } from "react-icons/hi";
+import { DATA_COUNTRY, DATA_GENDER } from "@/helpers/data_ex";
 
 type Props = {
   actor: ActorItem;
@@ -28,11 +40,14 @@ const ActorEditModalForm: FC<Props> = ({ actor }) => {
   const { setItemIdActorForUpdate } = useListProviderAdmin();
   const [actorForEdit] = useState<ActorItem>({
     ...actor,
+    info: actor.info ? actor.info : "",
+    birthday: actor.birthday ? new Date(actor.birthday) : "",
+    country: actor.country ? actor.country : "",
   });
 
   const { imagePreview, handleImageChange } = useImagePreview({
     defaultPreview: {
-      path: data ? data.image : "",
+      path: actor.image ? actor.image : "",
       file: null,
     },
   });
@@ -42,6 +57,15 @@ const ActorEditModalForm: FC<Props> = ({ actor }) => {
       refetchCategory();
     }
     setItemIdActorForUpdate(undefined);
+  };
+
+  const handleChooseBirthday = (date: Date | undefined | null) => {
+    if (date) {
+      const formatted = date.toISOString().split("T")[0];
+      formik.setFieldValue("birthday", formatted);
+    } else {
+      formik.setFieldValue("birthday", "");
+    }
   };
 
   const formik = useFormik({
@@ -59,22 +83,32 @@ const ActorEditModalForm: FC<Props> = ({ actor }) => {
           return;
         }
 
-        let dataActor = new FormData();
+        const dataActor = new FormData();
         dataActor.append("name", values.name);
-        dataActor.append("info", values.info);
-        dataActor.append("birthday", values.birthday);
-        dataActor.append("gender", values.gender);
-        dataActor.append("country", values.country);
+        dataActor.append("info", values.info ? values.info : "");
+        dataActor.append(
+          "birthday",
+          values.birthday
+            ? typeof values.birthday === "string"
+              ? values.birthday
+              : values.birthday.toISOString().split("T")[0]
+            : ""
+        );
+        dataActor.append("gender", values.gender ? values.gender : "Male");
+        dataActor.append(
+          "country",
+          values.country ? values.country : "Vietnam"
+        );
 
         if (Object(imagePreview)?.file) {
           dataActor.append("image", Object(imagePreview)?.file);
         }
 
         if (isNotEmpty(values.id)) {
-          await updateData("/actors/", dataActor);
+          await updateData2("/actors/", values.id, dataActor, config);
           toast.success("Cập nhật thành công !");
         } else {
-          await createData("/actors/", dataActor);
+          await createData2("/actors/", dataActor, config);
           toast.success("Thêm mới thành công !");
         }
       } catch (ex) {
@@ -89,6 +123,7 @@ const ActorEditModalForm: FC<Props> = ({ actor }) => {
   return (
     <>
       <form className="form" onSubmit={formik.handleSubmit} noValidate>
+        {/* Tên diễn viên */}
         <div className="my-1">
           <div className="mb-2 block">
             <Label htmlFor="password">Tên diễn viên :</Label>
@@ -117,13 +152,14 @@ const ActorEditModalForm: FC<Props> = ({ actor }) => {
           )}
         </div>
 
-        <div className="my-1">
+        {/* Giới thiệu */}
+        <div className="my-3">
           <div className="mb-2 block">
             <Label htmlFor="info">Giới thiệu :</Label>
           </div>
-          <TextInput
+          <Textarea
             id="info"
-            type="info"
+            rows={5}
             autoComplete="current-info"
             {...formik.getFieldProps("info")}
             className={clsx(
@@ -139,18 +175,62 @@ const ActorEditModalForm: FC<Props> = ({ actor }) => {
             placeholder="Mời bạn nhập tên của thể loại"
           />
           {formik.touched.info && formik.errors.info && (
-            <span role="alert" classinfo="text-red-500 text-sm mt-3">
+            <span role="alert" className="text-red-500 text-sm mt-3">
               {String(formik.errors.info)}
             </span>
           )}
         </div>
-        
-        <div>
-          <Datepicker {...formik.getFieldProps("birthday")}/>
+
+        <div className="grid grid-cols-3 gap-4 my-3">
+          <div>
+            <Label htmlFor="birthday">Ngày sinh :</Label>
+            <Datepicker
+              value={
+                formik.values.birthday instanceof Date
+                  ? formik.values.birthday
+                  : formik.values.birthday
+                  ? new Date(formik.values.birthday)
+                  : undefined
+              }
+              onChange={(date) => handleChooseBirthday(date)}
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="birthday">Giới tính :</Label>
+            <Select
+              id="gender"
+              {...formik.getFieldProps("gender")}
+              value={formik.values.gender}
+              onChange={formik.handleChange}
+            >
+              {DATA_GENDER.map((gender) => (
+                <option key={gender.value} value={gender.value}>
+                  {gender.label}
+                </option>
+              ))}
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="birthday">Quốc gia :</Label>
+            <Select
+              id="country"
+              {...formik.getFieldProps("country")}
+              value={formik.values.country}
+              onChange={formik.handleChange}
+            >
+              {DATA_COUNTRY.map((country) => (
+                <option key={country.value} value={country.label}>
+                  {country.label}
+                </option>
+              ))}
+            </Select>
+          </div>
         </div>
         <div>
           <div className="mb-2 block">
-            <Label htmlFor="img_course" value="Ảnh diễn viên" />
+            <Label htmlFor="img_course">Ảnh diễn viên :</Label>
           </div>
           <div className="flex w-full items-center justify-center">
             <Label

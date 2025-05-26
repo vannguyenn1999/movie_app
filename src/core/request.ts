@@ -25,9 +25,24 @@ export const createData = (query: string, data: unknown) => {
 }
 
 export const updateData = (query: string, data: { id: ID } & Record<string, unknown>) => {
-  return axios.put(`${query}${data.id}/`, data).then((d) => {
+  return axios.patch(`${query}${data.id}/`, data).then((d) => {
     return d.data
   })
 }
+
+export const updateData2 = (query: string, id: ID, data: any, config: any) => {
+  return axios.patch(`${query}${id}/`, data, config).then((d) => {
+    return d.data
+  })
+}
+
+export const createData2 = (query: string, data: unknown, config: any) => {
+  return axios.post(`${query}`, data, config).then((d) => {
+    return d.data
+  })
+}
+
+
+
 
 
