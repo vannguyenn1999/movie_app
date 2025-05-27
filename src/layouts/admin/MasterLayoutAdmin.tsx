@@ -26,7 +26,7 @@ const MasterLayoutAdmin = () => {
         {itemIdCategoryForUpdate !== undefined && <CategoryModal />}
         {itemIdCountryForUpdate !== undefined && <CountryModal />}
         {itemIdTopicForUpdate !== undefined && <TopicModal />}
-        <div className="flex-1 mx-auto p-5 min-h-screen bg-gray-100">
+        <div className="flex-1 mx-auto p-5 min-h-screen bg-gray-100 ">
           <Outlet />
         </div>
       </div>

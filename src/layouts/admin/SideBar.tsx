@@ -23,8 +23,12 @@ const SidebarLayout = () => {
         aria-label="Sidebar with logo branding example"
         className="min-h-screen rounded-none"
       >
-        <SidebarLogo href="#" img="/favicon.svg" imgAlt="Flowbite logo">
-          Flowbite
+        <SidebarLogo
+          href="#"
+          img={import.meta.env.VITE_REACT_APP_IMG_HEADER}
+          imgAlt="Flowbite logo"
+        >
+          Web Phim
         </SidebarLogo>
         <SidebarItems>
           <SidebarItemGroup>

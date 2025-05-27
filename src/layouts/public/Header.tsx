@@ -31,7 +31,7 @@ const HeaderLayout = () => {
             <div className="flex justify-center items-center">
               <Link to={"/home"}>
                 <img
-                  src="https://images.seeklogo.com/logo-png/22/2/garuda-pancasila-logo-png_seeklogo-229617.png"
+                  src={import.meta.env.VITE_REACT_APP_IMG_HEADER}
                   className="mr-3 h-6 sm:h-9 opacity-100"
                   alt="Flowbite React Logo"
                 />
