@@ -9,6 +9,17 @@ export const DATA_GENDER = [
     },
 ];
 
+export const DATA_TRUE_FALSE = [
+    {
+        value: true,
+        label: "Có",
+    },
+    {
+        value: false,
+        label: "Không",
+    },
+];
+
 export const DATA_COUNTRY = [
     {
         value: "america",

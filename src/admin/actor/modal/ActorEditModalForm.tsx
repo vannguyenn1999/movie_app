@@ -16,7 +16,6 @@ import { toast } from "react-toastify";
 import { FaSave } from "react-icons/fa";
 
 import type { ActorItem } from "@/helpers/models";
-import { useListProvider } from "@/stores/ListProvider";
 import { isNotEmpty } from "@/helpers/functions";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
 import { createData2, updateData2 } from "@/core/request";
@@ -36,7 +35,6 @@ const editActorSchema = Yup.object().shape({
 });
 
 const ActorEditModalForm: FC<Props> = ({ actor }) => {
-  const { refetchCategory } = useListProvider();
   const { setItemIdActorForUpdate } = useListProviderAdmin();
   const [actorForEdit] = useState<ActorItem>({
     ...actor,
@@ -51,13 +49,6 @@ const ActorEditModalForm: FC<Props> = ({ actor }) => {
       file: null,
     },
   });
-
-  const cancel = (withRefresh?: boolean) => {
-    if (withRefresh) {
-      refetchCategory();
-    }
-    setItemIdActorForUpdate(undefined);
-  };
 
   const handleChooseBirthday = (date: Date | undefined | null) => {
     if (date) {
@@ -116,7 +107,7 @@ const ActorEditModalForm: FC<Props> = ({ actor }) => {
         toast.error("Đã xảy ra lỗi vui lòng kiểm tra lại !");
       } finally {
         setSubmitting(true);
-        cancel(true);
+        setItemIdActorForUpdate(undefined);
       }
     },
   });

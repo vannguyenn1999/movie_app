@@ -1,9 +1,23 @@
+import { Modal, ModalBody, ModalHeader } from "flowbite-react";
+
+import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
+import MovieWrapperModal from "./MovieWrapperModal";
+
 const MovieModal = () => {
+  const { itemIdMovieForUpdate, setItemIdMovieForUpdate } =
+    useListProviderAdmin();
+
   return (
-    <div>
-      <h1>Movie Modal</h1>
-      <p>This is a modal for adding or editing movies.</p>
-    </div>
+    <Modal
+      show={itemIdMovieForUpdate !== undefined}
+      size="7xl"
+      onClose={() => setItemIdMovieForUpdate(undefined)}
+    >
+      <ModalHeader>Phim</ModalHeader>
+      <ModalBody>
+        <MovieWrapperModal />
+      </ModalBody>
+    </Modal>
   );
 };
 

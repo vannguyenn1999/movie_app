@@ -59,19 +59,19 @@ export type PaginationType = {
 // Main Types
 export type MovieItem = {
   id: number;
-  description: string;
-  duration: string;
-  image: string | null
-  image_avatar: string | null
-  video: string | null
-  imdb: number
-  rating: number
-  is_ads: boolean
-  is_banner: boolean
-  language: string
-  release_date: string
-  title: string
-  slug: string
+  description?: string;
+  duration?: string;
+  image?: string | null
+  image_avatar?: string | null
+  video?: string | null
+  imdb?: number
+  rating?: number
+  is_ads?: boolean
+  is_banner?: boolean
+  language?: string
+  release_date?: string | Date
+  title?: string
+  slug?: string
   created_at?: string;
   updated_at?: string;
   category?: CategoryItem;
