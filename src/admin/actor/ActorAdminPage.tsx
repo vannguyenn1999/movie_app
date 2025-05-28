@@ -75,6 +75,7 @@ const ActorAdminPage = () => {
           await deleteMultiItem("/actors/1/", ids);
           toast.success("Xóa diễn viên thành công");
           refetch();
+          setSelectItem([]);
         }
       });
     } catch (error) {

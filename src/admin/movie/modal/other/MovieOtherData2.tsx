@@ -16,8 +16,6 @@ const MovieOtherData2: FC<MovieOtherDataProps> = ({ formik }) => {
       const day = String(date.getDate()).padStart(2, "0");
       const formatted = `${year}-${month}-${day}`;
       formik.setFieldValue("release_date", formatted);
-
-      formik.setFieldValue("release_date", formatted);
     } else {
       formik.setFieldValue("release_date", "");
     }

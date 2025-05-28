@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { FormikProps } from "formik";
+import type { JSX } from "react";
+
 export interface AuthModel {
   access: string;
   refresh: string;
@@ -47,3 +51,9 @@ export const initialQueryRequest: QueryRequestContextProps = {
 
 
 export type OptionType = { label: string; value: string };
+
+export type OptionType2 = { label: string; value: JSX.Element }
+
+export type MovieOtherDataProps = {
+  formik: FormikProps<any>;
+}; 

@@ -61,9 +61,9 @@ export type MovieItem = {
   id: number;
   description?: string;
   duration?: string;
-  image?: string | null
-  image_avatar?: string | null
-  video?: string | null
+  image?: string | null | File
+  image_avatar?: string | null | File
+  video?: string | null | File
   imdb?: number
   rating?: number
   is_ads?: boolean

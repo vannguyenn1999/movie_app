@@ -83,6 +83,7 @@ const MovieAdminPage = () => {
           await deleteMultiItem("/movies/1/", ids);
           toast.success("Xóa bộ phim thành công");
           refetch();
+          setSelectItem([]);
         }
       });
     } catch (error) {
@@ -126,7 +127,7 @@ const MovieAdminPage = () => {
           >
             <div className="flex items-center justify-center gap-1">
               <HiTrash />
-              <span>Xóa {selectItem.length} diễn viên</span>
+              <span>Xóa {selectItem.length} phim</span>
             </div>
           </Button>
         )}
@@ -229,7 +230,7 @@ const MovieAdminPage = () => {
                     <TableCell>
                       <div className="flex justify-center items-center">
                         <img
-                          src={item.image ? item.image : ""}
+                          src={item.image ? String(item.image) : ""}
                           alt={item.title}
                           className="w-20 h-20 object-cover rounded-lg"
                         />
@@ -238,7 +239,9 @@ const MovieAdminPage = () => {
                     <TableCell>
                       <div className="flex justify-center items-center">
                         <img
-                          src={item.image_avatar ? item.image_avatar : ""}
+                          src={
+                            item.image_avatar ? String(item.image_avatar) : ""
+                          }
                           alt={item.title}
                           className="w-20 h-20 object-cover rounded-lg"
                         />
@@ -246,7 +249,7 @@ const MovieAdminPage = () => {
                     </TableCell>
                     <TableCell className="text-center">
                       <Link
-                        to={item.video ? item.video : ""}
+                        to={item.video ? String(item.video) : ""}
                         target="_blank"
                         className="flex items-center justify-center"
                       >

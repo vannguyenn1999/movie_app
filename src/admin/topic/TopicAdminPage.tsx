@@ -39,6 +39,7 @@ const TopicAdminPage = () => {
           await deleteMultiItem("/topics/1/", ids);
           toast.success("Xóa chủ đề thành công");
           refetchTopic();
+          setSelectItem([]);
         }
       });
     } catch (error) {

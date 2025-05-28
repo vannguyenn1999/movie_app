@@ -39,6 +39,7 @@ const CategoryAdminPage = () => {
           await deleteMultiItem("/categories/1/", ids);
           toast.success("Xóa thể loại thành công");
           refetchCategory();
+          setSelectItem([]);
         }
       });
     } catch (error) {

@@ -39,6 +39,7 @@ const CountryAdminPage = () => {
           await deleteMultiItem("/countries/1/", ids);
           toast.success("Xóa quốc gia thành công");
           refetchCountry();
+          setSelectItem([]);
         }
       });
     } catch (error) {

@@ -2,26 +2,18 @@ import { useState, type FC } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import clsx from "clsx";
-import {
-  Button,
-  Label,
-  Spinner,
-  TextInput,
-  FileInput,
-  Textarea,
-} from "flowbite-react";
+import { Button, Label, Spinner, TextInput, Textarea } from "flowbite-react";
 import { toast } from "react-toastify";
 import { FaSave } from "react-icons/fa";
-import { HiOutlineUpload, HiOutlineXCircle } from "react-icons/hi";
 
 import type { MovieItem } from "@/helpers/models";
 import { isNotEmpty } from "@/helpers/functions";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
 import { createData2, updateData2 } from "@/core/request";
-import { useImagePreview } from "@/helpers/hook";
 import MovieOtherData from "./other/MovieOtherData";
-import SelectCompoment from "./actor/SelectCompoment";
+import ActorSelectCompoment from "./actor/ActorSelectCompoment";
 import MovieOtherData2 from "./other/MovieOtherData2";
+import MovieImgAndVideo from "./imgAndVideo/MovieImgAndVideo";
 
 type Props = {
   movie: MovieItem;
@@ -45,51 +37,64 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
     release_date: movie.release_date ? new Date(movie.release_date) : "",
   });
 
-  const { imagePreview, handleImageChange } = useImagePreview({
-    defaultPreview: {
-      path: movie.image ? movie.image : "",
-      file: null,
-    },
-  });
-
   const formik = useFormik({
     initialValues: movieForEdit,
     validationSchema: editMovieSchema,
     onSubmit: async (values, { setSubmitting }) => {
       setSubmitting(true);
       try {
-        console.log("vaaaa", values);
-        return;
-
         const config = {
           headers: { "Content-Type": "multipart/form-data" },
         };
 
-        if (Object(imagePreview)?.file == "") {
+        if (values.image_avatar === undefined) {
           toast.info("Mời bạn chọn ảnh đại diện cho bộ phim !");
           return;
         }
+
+        if (values.image === undefined) {
+          toast.info("Mời bạn chọn ảnh bìa cho bộ phim !");
+          return;
+        }
+
+        if (values.video === undefined) {
+          toast.info("Mời bạn chọn bộ phim !");
+          return;
+        }
+
         const dataMovie = new FormData();
 
         dataMovie.append("title", values.title ? values.title : "");
-        dataMovie.append("imdb", values.title ? values.title : "5");
-        dataMovie.append("rating", values.title ? values.title : "5");
+        dataMovie.append(
+          "imdb",
+          values.imdb ? String(Number(values.imdb)) : "5"
+        );
+        dataMovie.append(
+          "rating",
+          values.rating ? String(Number(values.rating)) : "5"
+        );
         dataMovie.append("duration", values.duration ? values.duration : "1h");
         dataMovie.append(
           "actor",
-          values.actor ? JSON.stringify(values.actor) : "[]"
+          values.actor && Array.isArray(values.actor)
+            ? values.actor.join(",")
+            : ""
         );
         dataMovie.append(
           "category",
-          values.category ? JSON.stringify(values.category) : "[]"
+          values.category && Array.isArray(values.category)
+            ? values.category.join(",")
+            : ""
         );
         dataMovie.append(
           "topic",
-          values.topic ? JSON.stringify(values.topic) : "[]"
+          values.topic && Array.isArray(values.topic)
+            ? values.topic.join(",")
+            : ""
         );
         dataMovie.append(
           "country",
-          values.actor ? JSON.stringify(values.actor) : "[]"
+          values.country ? String(values.country) : ""
         );
         dataMovie.append(
           "description",
@@ -100,7 +105,7 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
           values.release_date
             ? typeof values.release_date === "string"
               ? values.release_date
-              : values.release_date.toISOString().split("T")[0]
+              : ""
             : ""
         );
 
@@ -109,8 +114,16 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
           values.language ? values.language : "Việt nam"
         );
 
-        if (Object(imagePreview)?.file) {
-          dataMovie.append("image", Object(imagePreview)?.file);
+        if (values.image) {
+          dataMovie.append("image", values.image as File);
+        }
+
+        if (values.image_avatar) {
+          dataMovie.append("image_avatar", values.image_avatar as File);
+        }
+
+        if (values.video) {
+          dataMovie.append("video", values.video as File);
         }
 
         if (isNotEmpty(values.id)) {
@@ -120,12 +133,12 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
           await createData2("/movies/", dataMovie, config);
           toast.success("Thêm mới thành công !");
         }
+        setItemIdMovieForUpdate(undefined);
       } catch (ex) {
         console.error(ex);
         toast.error("Đã xảy ra lỗi vui lòng kiểm tra lại !");
       } finally {
         setSubmitting(true);
-        setItemIdMovieForUpdate(undefined);
       }
     },
   });
@@ -196,128 +209,12 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
         </>
 
         <>
+          <ActorSelectCompoment formik={formik} />
           <MovieOtherData formik={formik} />
-          <SelectCompoment formik={formik} />
         </>
-        <div className="grid grid-cols-3 gap-4 my-3">
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="img_course">Ảnh đại diện :</Label>
-            </div>
-            <div className="flex w-full items-center justify-center">
-              <Label
-                htmlFor="dropzone-file"
-                className="flex h-20 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-              >
-                <div className="flex flex-col items-center justify-center pb-6 pt-5 text-2xl">
-                  <HiOutlineUpload />
-                </div>
-                <FileInput
-                  onChange={(event) => handleImageChange(event)}
-                  id="dropzone-file"
-                  className="hidden"
-                  accept=".jpg,.png"
-                />
-              </Label>
-            </div>
-
-            {Object(imagePreview)?.path !== "" && (
-              <div className="flex items-center justify-center my-5 relative">
-                <button
-                  type="button"
-                  onClick={() => handleImageChange(null)}
-                  className="absolute top-0 right-0 p-5 cursor-pointer"
-                >
-                  <HiOutlineXCircle className="text-2xl" />
-                </button>
-                <img
-                  src={Object(imagePreview)?.path}
-                  alt=""
-                  className="h-auto max-w-50 rounded-lg"
-                />
-              </div>
-            )}
-          </div>
-
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="img_course">Ảnh bìa :</Label>
-            </div>
-            <div className="flex w-full items-center justify-center">
-              <Label
-                htmlFor="dropzone-file"
-                className="flex h-20 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-              >
-                <div className="flex flex-col items-center justify-center pb-6 pt-5 text-2xl">
-                  <HiOutlineUpload />
-                </div>
-                <FileInput
-                  onChange={(event) => handleImageChange(event)}
-                  id="dropzone-file"
-                  className="hidden"
-                  accept=".jpg,.png"
-                />
-              </Label>
-            </div>
-
-            {Object(imagePreview)?.path !== "" && (
-              <div className="flex items-center justify-center my-5 relative">
-                <button
-                  type="button"
-                  onClick={() => handleImageChange(null)}
-                  className="absolute top-0 right-0 p-5 cursor-pointer"
-                >
-                  <HiOutlineXCircle className="text-2xl" />
-                </button>
-                <img
-                  src={Object(imagePreview)?.path}
-                  alt=""
-                  className="h-auto max-w-50 rounded-lg"
-                />
-              </div>
-            )}
-          </div>
-
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="img_course">Video :</Label>
-            </div>
-            <div className="flex w-full items-center justify-center">
-              <Label
-                htmlFor="dropzone-file"
-                className="flex h-20 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-              >
-                <div className="flex flex-col items-center justify-center pb-6 pt-5 text-2xl">
-                  <HiOutlineUpload />
-                </div>
-                <FileInput
-                  onChange={(event) => handleImageChange(event)}
-                  id="dropzone-file"
-                  className="hidden"
-                  accept=".jpg,.png"
-                />
-              </Label>
-            </div>
-
-            {Object(imagePreview)?.path !== "" && (
-              <div className="flex items-center justify-center my-5 relative">
-                <button
-                  type="button"
-                  onClick={() => handleImageChange(null)}
-                  className="absolute top-0 right-0 p-5 cursor-pointer"
-                >
-                  <HiOutlineXCircle className="text-2xl" />
-                </button>
-                <img
-                  src={Object(imagePreview)?.path}
-                  alt=""
-                  className="h-auto max-w-50 rounded-lg"
-                />
-              </div>
-            )}
-          </div>
-        </div>
-
+        <>
+          <MovieImgAndVideo formik={formik} />
+        </>
         <div className="w-full flex items-center justify-center my-5">
           <Button
             disabled={formik.isSubmitting}
