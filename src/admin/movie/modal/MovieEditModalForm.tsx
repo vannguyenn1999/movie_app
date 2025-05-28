@@ -7,10 +7,8 @@ import {
   Label,
   Spinner,
   TextInput,
-  Datepicker,
   FileInput,
   Textarea,
-  Select,
 } from "flowbite-react";
 import { toast } from "react-toastify";
 import { FaSave } from "react-icons/fa";
@@ -21,9 +19,9 @@ import { isNotEmpty } from "@/helpers/functions";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
 import { createData2, updateData2 } from "@/core/request";
 import { useImagePreview } from "@/helpers/hook";
-import { DATA_COUNTRY, DATA_TRUE_FALSE } from "@/helpers/data_ex";
-import MovieOtherData from "./MovieOtherData";
+import MovieOtherData from "./other/MovieOtherData";
 import SelectCompoment from "./actor/SelectCompoment";
+import MovieOtherData2 from "./other/MovieOtherData2";
 
 type Props = {
   movie: MovieItem;
@@ -34,6 +32,10 @@ const editMovieSchema = Yup.object().shape({
     .min(3, "Tối thiểu là 3 ký tự")
     .max(50, "Tối đa là 50 ký tự")
     .required("Tên của phim phải được nhập !"),
+  description: Yup.string()
+    .min(3, "Tối thiểu là 3 ký tự")
+    .max(500, "Tối đa là 500 ký tự")
+    .required("Giới thiệu cho phim phải được nhập !"),
 });
 
 const MovieEditModalForm: FC<Props> = ({ movie }) => {
@@ -50,40 +52,50 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
     },
   });
 
-  const handleChooseBirthday = (date: Date | undefined | null) => {
-    if (date) {
-      const formatted = date.toISOString().split("T")[0];
-      formik.setFieldValue("birthday", formatted);
-    } else {
-      formik.setFieldValue("birthday", "");
-    }
-  };
-
   const formik = useFormik({
     initialValues: movieForEdit,
     validationSchema: editMovieSchema,
     onSubmit: async (values, { setSubmitting }) => {
       setSubmitting(true);
       try {
+        console.log("vaaaa", values);
+        return;
+
         const config = {
           headers: { "Content-Type": "multipart/form-data" },
         };
 
         if (Object(imagePreview)?.file == "") {
-          toast.info("Mời bạn chọn ảnh đại diện cho diễn viên !");
+          toast.info("Mời bạn chọn ảnh đại diện cho bộ phim !");
           return;
         }
+        const dataMovie = new FormData();
 
-        const dataActor = new FormData();
-        dataActor.append("title", values.title ? values.title : "");
-        dataActor.append("imdb", values.title ? values.title : "5");
-        dataActor.append("rating", values.title ? values.title : "5");
-        dataActor.append("duration", values.duration ? values.duration : "1h");
-        dataActor.append(
+        dataMovie.append("title", values.title ? values.title : "");
+        dataMovie.append("imdb", values.title ? values.title : "5");
+        dataMovie.append("rating", values.title ? values.title : "5");
+        dataMovie.append("duration", values.duration ? values.duration : "1h");
+        dataMovie.append(
+          "actor",
+          values.actor ? JSON.stringify(values.actor) : "[]"
+        );
+        dataMovie.append(
+          "category",
+          values.category ? JSON.stringify(values.category) : "[]"
+        );
+        dataMovie.append(
+          "topic",
+          values.topic ? JSON.stringify(values.topic) : "[]"
+        );
+        dataMovie.append(
+          "country",
+          values.actor ? JSON.stringify(values.actor) : "[]"
+        );
+        dataMovie.append(
           "description",
           values.description ? values.description : ""
         );
-        dataActor.append(
+        dataMovie.append(
           "release_date",
           values.release_date
             ? typeof values.release_date === "string"
@@ -92,20 +104,20 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
             : ""
         );
 
-        dataActor.append(
+        dataMovie.append(
           "language",
           values.language ? values.language : "Việt nam"
         );
 
         if (Object(imagePreview)?.file) {
-          dataActor.append("image", Object(imagePreview)?.file);
+          dataMovie.append("image", Object(imagePreview)?.file);
         }
 
         if (isNotEmpty(values.id)) {
-          await updateData2("/movies/", values.id, dataActor, config);
+          await updateData2("/movies/", values.id, dataMovie, config);
           toast.success("Cập nhật thành công !");
         } else {
-          await createData2("/movies/", dataActor, config);
+          await createData2("/movies/", dataMovie, config);
           toast.success("Thêm mới thành công !");
         }
       } catch (ex) {
@@ -117,6 +129,7 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
       }
     },
   });
+
   return (
     <>
       <form className="form" onSubmit={formik.handleSubmit} noValidate>
@@ -140,7 +153,7 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
                   formik.touched.title && !formik.errors.title,
               }
             )}
-            placeholder="Mời bạn nhập tên của thể loại"
+            placeholder="Mời bạn nhập tên của bộ phim"
           />
           {formik.touched.title && formik.errors.title && (
             <span role="alert" className="text-red-500 text-sm mt-3">
@@ -169,7 +182,7 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
                   formik.touched.description && !formik.errors.description,
               }
             )}
-            placeholder="Mời bạn nhập tên của thể loại"
+            placeholder="Mời bạn nhập giới thiệu cho bộ phim"
           />
           {formik.touched.description && formik.errors.description && (
             <span role="alert" className="text-red-500 text-sm mt-3">
@@ -178,177 +191,13 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
           )}
         </div>
 
-        <div className="grid grid-cols-7 gap-4 my-3">
-          {/* Ngày phát hành */}
-          <div>
-            <Label htmlFor="release_date">Ngày phát hành :</Label>
-            <Datepicker
-              value={
-                formik.values.release_date instanceof Date
-                  ? formik.values.release_date
-                  : formik.values.release_date
-                  ? new Date(formik.values.release_date)
-                  : undefined
-              }
-              onChange={(date) => handleChooseBirthday(date)}
-              className="mt-2"
-            />
-          </div>
-
-          {/* Điểm imdb */}
-          <div className="">
-            <div className="mb-2 block">
-              <Label htmlFor="password">Điểm Imdb :</Label>
-            </div>
-            <TextInput
-              id="imdb"
-              type="number"
-              autoComplete="current-imdb"
-              {...formik.getFieldProps("imdb")}
-              className={clsx(
-                {
-                  "dark:bg-gray-700 dark:border-red-500 dark:placeholder-gray-400 rounded-lg bg-gray-500 border border-red-500 text-red-500":
-                    formik.touched.imdb && formik.errors.imdb,
-                },
-                {
-                  "dark:bg-gray-700 dark:border-green-500 dark:placeholder-gray-400 rounded-lg bg-gray-50 border border-green-300 text-green-500":
-                    formik.touched.imdb && !formik.errors.imdb,
-                }
-              )}
-            />
-            {formik.touched.imdb && formik.errors.imdb && (
-              <span role="alert" className="text-red-500 text-sm mt-3">
-                {String(formik.errors.imdb)}
-              </span>
-            )}
-          </div>
-
-          {/* Đánh giá */}
-          <div className="">
-            <div className="mb-2 block">
-              <Label htmlFor="password">Đánh giá :</Label>
-            </div>
-            <TextInput
-              id="rating"
-              type="number"
-              autoComplete="current-rating"
-              {...formik.getFieldProps("rating")}
-              className={clsx(
-                {
-                  "dark:bg-gray-700 dark:border-red-500 dark:placeholder-gray-400 rounded-lg bg-gray-500 border border-red-500 text-red-500":
-                    formik.touched.rating && formik.errors.rating,
-                },
-                {
-                  "dark:bg-gray-700 dark:border-green-500 dark:placeholder-gray-400 rounded-lg bg-gray-50 border border-green-300 text-green-500":
-                    formik.touched.rating && !formik.errors.rating,
-                }
-              )}
-              disabled
-              readOnly
-            />
-          </div>
-
-          {/* Thời lượng */}
-          <div className="">
-            <div className="mb-2 block">
-              <Label htmlFor="password">Thời lượng :</Label>
-            </div>
-            <TextInput
-              id="duration"
-              type="text"
-              autoComplete="current-duration"
-              {...formik.getFieldProps("duration")}
-              className={clsx(
-                {
-                  "dark:bg-gray-700 dark:border-red-500 dark:placeholder-gray-400 rounded-lg bg-gray-500 border border-red-500 text-red-500":
-                    formik.touched.duration && formik.errors.duration,
-                },
-                {
-                  "dark:bg-gray-700 dark:border-green-500 dark:placeholder-gray-400 rounded-lg bg-gray-50 border border-green-300 text-green-500":
-                    formik.touched.duration && !formik.errors.duration,
-                }
-              )}
-            />
-            {formik.touched.duration && formik.errors.duration && (
-              <span role="alert" className="text-red-500 text-sm mt-3">
-                {String(formik.errors.duration)}
-              </span>
-            )}
-          </div>
-
-          {/* Ngôn ngữ */}
-          <div>
-            <Label htmlFor="birthday" className="mb-2 block">
-              Ngôn ngữ :
-            </Label>
-            <Select
-              id="language"
-              {...formik.getFieldProps("language")}
-              value={formik.values.language}
-              onChange={formik.handleChange}
-            >
-              {DATA_COUNTRY.map((country) => (
-                <option key={country.value} value={country.label}>
-                  {country.label}
-                </option>
-              ))}
-            </Select>
-          </div>
-
-          {/* Trang chủ */}
-          <div>
-            <Label htmlFor="" className="mb-2 block">
-              Trang chủ :
-            </Label>
-            <Select
-              id="is_banner"
-              {...formik.getFieldProps("is_banner")}
-              value={
-                formik.values.is_banner !== undefined
-                  ? String(formik.values.is_banner)
-                  : ""
-              }
-              onChange={formik.handleChange}
-            >
-              {DATA_TRUE_FALSE.map((choose) => (
-                <option key={choose.label} value={String(choose.value)}>
-                  {choose.label}
-                </option>
-              ))}
-            </Select>
-          </div>
-
-          {/* Ngôn ngữ */}
-          <div>
-            <Label htmlFor="" className="mb-2 block">
-              Quảng cáo :
-            </Label>
-            <Select
-              id="is_ads"
-              {...formik.getFieldProps("is_ads")}
-              value={
-                formik.values.is_ads !== undefined
-                  ? String(formik.values.is_ads)
-                  : ""
-              }
-              onChange={formik.handleChange}
-            >
-              {DATA_TRUE_FALSE.map((choose) => (
-                <option key={choose.label} value={String(choose.value)}>
-                  {choose.label}
-                </option>
-              ))}
-            </Select>
-          </div>
-        </div>
+        <>
+          <MovieOtherData2 formik={formik} />
+        </>
 
         <>
-          <MovieOtherData
-            category={formik.values.category ? formik.values.category : []}
-            topic={formik.values.topic ? formik.values.topic : []}
-            country={formik.values.country ? formik.values.country : []}
-          />
-          <SelectCompoment />
+          <MovieOtherData formik={formik} />
+          <SelectCompoment formik={formik} />
         </>
         <div className="grid grid-cols-3 gap-4 my-3">
           <div>

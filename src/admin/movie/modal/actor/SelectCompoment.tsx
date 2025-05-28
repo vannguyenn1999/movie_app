@@ -1,20 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, type FC } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { Avatar, Label } from "flowbite-react";
 import type { MultiValue, ActionMeta } from "react-select";
+import type { OptionType } from "@/core/models";
+import type { FormikProps } from "formik";
 
 import { useDebounce } from "@/helpers/hook";
 import CustomMenuList from "./CustomMenuList";
 import type { ActorItem } from "@/helpers/models";
 import { getData } from "@/core/request";
 
-type OptionType = { label: string; value: string };
 const animatedComponents = makeAnimated();
 
-const SelectCompoment = () => {
+type MovieOtherDataProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formik: FormikProps<any>;
+};
+
+const SelectCompoment: FC<MovieOtherDataProps> = ({ formik }) => {
   const [options, setOptions] = useState<OptionType[]>([]);
   const [page, setPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -27,14 +33,14 @@ const SelectCompoment = () => {
     setPage(1);
   }, [debouncedSearchTerm]);
 
-  const fetchOptions = async (pageNumber: number) => {
+  const fetchOptions = async (numPage: number) => {
     const res = await getData(
-      `actors/?page=${pageNumber}&search=${debouncedSearchTerm}`
+      `actors/?page=${numPage}&search=${debouncedSearchTerm}`
     );
     console.log("res", res);
 
-    const dataLabel = res.results.map((item: ActorItem) => ({
-      value: item.id,
+    const dataLabel = res?.results?.map((item: ActorItem) => ({
+      value: String(item.id),
       label: (
         <div className="flex justify-start items-center" key={item.id}>
           <Avatar img={item.image} rounded>
@@ -45,9 +51,7 @@ const SelectCompoment = () => {
         </div>
       ),
     }));
-    setOptions((prev) =>
-      pageNumber === 1 ? dataLabel : [...prev, ...dataLabel]
-    );
+    setOptions((prev) => (page === 1 ? dataLabel : [...prev, ...dataLabel]));
   };
 
   const handleInputChange = (value: string) => {
@@ -59,11 +63,23 @@ const SelectCompoment = () => {
     actionMeta: ActionMeta<OptionType>
   ) => {
     console.log("dataaaa", data);
+    const result = data.map((item) => item.value);
+    formik.setFieldValue("actor", result);
+  };
+
+  const getDataActor = () => {
+    if (formik.values.id === 0) return [];
+    console.log("options", options);
+
+    if (options == undefined) return [];
+    return options.filter((opt) =>
+      formik.values.actor.some(
+        (it: { id: number }) => String(it.id) === opt.value
+      )
+    );
   };
 
   const handleLoadMore = useCallback(() => {
-    console.log("isLoadingMore", isLoadingMore);
-
     if (isLoadingMore) return;
     setIsLoadingMore(true);
     const nextPage = page + 1;
@@ -90,6 +106,7 @@ const SelectCompoment = () => {
         onChange={handleOnChangeData}
         className="w-auto"
         isMulti
+        defaultValue={getDataActor()}
       />
     </>
   );

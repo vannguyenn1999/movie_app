@@ -42,5 +42,8 @@ export type QueryRequestContextProps = {
 
 export const initialQueryRequest: QueryRequestContextProps = {
   state: "",
-  updateState: () => {},
+  updateState: () => { },
 };
+
+
+export type OptionType = { label: string; value: string };

@@ -27,7 +27,7 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 const onResponseError = (error: AxiosError) => {
   const originalRequest = error.config;
 
-  console.log("originalRequest", originalRequest);
+  // console.log("originalRequest", originalRequest);
 
   if (typeof error.response === "undefined") {
     return {
@@ -84,7 +84,7 @@ const onResponseError = (error: AxiosError) => {
         .post("auth/refresh/", { refresh: refreshToken })
         .then((response) => {
           authHelper.removeAuth();
-          console.log("authHelper.setAuth(response.data)", response.data);
+          // console.log("authHelper.setAuth(response.data)", response.data);
           authHelper.setAuth(response.data);
           // return axios(originalRequest);
         })
