@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, type FC } from "react";
+import { type FC } from "react";
 import { FileInput, Label } from "flowbite-react";
 import { HiOutlineUpload, HiOutlineXCircle } from "react-icons/hi";
 
@@ -14,11 +14,13 @@ const VideoCompoment: FC<MovieOtherDataProps> = ({ formik }) => {
     },
   });
 
-  useEffect(() => {
-    if (imagePreview.file) {
-      formik.setFieldValue("video", imagePreview.file);
-    }
-  }, [imagePreview]);
+  const handleChangeAndSetFormik = (
+    event: React.ChangeEvent<HTMLInputElement> | null
+  ) => {
+    handleImageChange(event);
+    const file = event?.currentTarget.files?.[0] || null;
+    formik.setFieldValue("video", file || "");
+  };
 
   return (
     <div>
@@ -34,7 +36,7 @@ const VideoCompoment: FC<MovieOtherDataProps> = ({ formik }) => {
             <HiOutlineUpload />
           </div>
           <FileInput
-            onChange={(event) => handleImageChange(event)}
+            onChange={(event) => handleChangeAndSetFormik(event)}
             id="dropzone-video"
             className="hidden"
             accept=".mp4"
@@ -42,11 +44,11 @@ const VideoCompoment: FC<MovieOtherDataProps> = ({ formik }) => {
         </Label>
       </div>
 
-      {Object(imagePreview)?.path !== "" && (
+      {imagePreview.path && (
         <div className="flex items-center justify-center my-5 relative">
           <button
             type="button"
-            onClick={() => handleImageChange(null)}
+            onClick={() => handleChangeAndSetFormik(null)}
             className="absolute top-0 right-0 p-5 cursor-pointer"
           >
             <HiOutlineXCircle className="text-2xl" />

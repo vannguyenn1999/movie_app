@@ -18,7 +18,7 @@ const getRandomLightHexColor = () => {
 }
 
 // ? Chuyển đổi thời gian từ "YYYY-MM-DD" thành "DD-MM-YYYY"
-const convertTime = (time: string) => {
+const convertTime = (time: string, type = 1) => {
   const dateObj = new Date(time);
 
   // Lấy ngày, tháng, năm
@@ -27,7 +27,10 @@ const convertTime = (time: string) => {
   const year = dateObj.getFullYear();
 
   // Ghép lại theo định dạng dd-mm-yyyy
-  return `${day}-${month}-${year}`;
+  if (type === 1) {
+    return `${day}-${month}-${year}`;
+  }
+  return `${year}-${month}-${day}`;
 }
 
 const findNameBySlug = (data: any, key: string) => {
@@ -72,4 +75,21 @@ const groupingOnSelect = (
   }
 };
 
-export { getRandomLightHexColor, convertTime, findNameBySlug, formatDate, isNotEmpty, groupingOnSelect }
+const convertArray = (data: any) => {
+  if (Array.isArray(data) && data.length > 0) {
+    if (typeof (data[0]) == 'object') {
+      const result = data.map((item) => item.id)
+      return result.join(',')
+    }
+    return data.join(',')
+  }
+
+  if (typeof (data) == 'object') {
+    return String(data.id)
+  }
+
+  return ""
+
+}
+
+export { getRandomLightHexColor, convertTime, findNameBySlug, formatDate, isNotEmpty, groupingOnSelect, convertArray }

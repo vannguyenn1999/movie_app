@@ -7,13 +7,15 @@ import { toast } from "react-toastify";
 import { FaSave } from "react-icons/fa";
 
 import type { MovieItem } from "@/helpers/models";
-import { isNotEmpty } from "@/helpers/functions";
+import { convertArray, convertTime, isNotEmpty } from "@/helpers/functions";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
 import { createData2, updateData2 } from "@/core/request";
 import MovieOtherData from "./other/MovieOtherData";
 import ActorSelectCompoment from "./actor/ActorSelectCompoment";
 import MovieOtherData2 from "./other/MovieOtherData2";
-import MovieImgAndVideo from "./imgAndVideo/MovieImgAndVideo";
+import ImageCompoment from "./imgAndVideo/Image";
+import ThumbCompoment from "./imgAndVideo/Thumb";
+import VideoCompoment from "./imgAndVideo/Video";
 
 type Props = {
   movie: MovieItem;
@@ -35,6 +37,10 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
   const [movieForEdit] = useState<MovieItem>({
     ...movie,
     release_date: movie.release_date ? new Date(movie.release_date) : "",
+    title: movie.title || "",
+    description: movie.description || "",
+    imdb: movie.imdb || 0,
+    duration: movie.duration || "",
   });
 
   const formik = useFormik({
@@ -76,25 +82,19 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
         dataMovie.append("duration", values.duration ? values.duration : "1h");
         dataMovie.append(
           "actor",
-          values.actor && Array.isArray(values.actor)
-            ? values.actor.join(",")
-            : ""
+          values.actor ? convertArray(values.actor) : ""
         );
         dataMovie.append(
           "category",
-          values.category && Array.isArray(values.category)
-            ? values.category.join(",")
-            : ""
+          values.category ? convertArray(values.category) : ""
         );
         dataMovie.append(
           "topic",
-          values.topic && Array.isArray(values.topic)
-            ? values.topic.join(",")
-            : ""
+          values.topic ? convertArray(values.topic) : ""
         );
         dataMovie.append(
           "country",
-          values.country ? String(values.country) : ""
+          values.country ? convertArray(values.country) : ""
         );
         dataMovie.append(
           "description",
@@ -105,7 +105,7 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
           values.release_date
             ? typeof values.release_date === "string"
               ? values.release_date
-              : ""
+              : convertTime(String(values.release_date), 2)
             : ""
         );
 
@@ -114,16 +114,16 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
           values.language ? values.language : "Việt nam"
         );
 
-        if (values.image) {
-          dataMovie.append("image", values.image as File);
+        if (values.image && values.image instanceof File) {
+          dataMovie.append("image", values.image);
         }
 
-        if (values.image_avatar) {
-          dataMovie.append("image_avatar", values.image_avatar as File);
+        if (values.image_avatar && values.image_avatar instanceof File) {
+          dataMovie.append("image_avatar", values.image_avatar);
         }
 
-        if (values.video) {
-          dataMovie.append("video", values.video as File);
+        if (values.video && values.video instanceof File) {
+          dataMovie.append("video", values.video);
         }
 
         if (isNotEmpty(values.id)) {
@@ -212,9 +212,17 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
           <ActorSelectCompoment formik={formik} />
           <MovieOtherData formik={formik} />
         </>
-        <>
-          <MovieImgAndVideo formik={formik} />
-        </>
+        <div className="grid grid-cols-3 gap-4 my-3">
+          <>
+            <ImageCompoment formik={formik} />
+          </>
+          <>
+            <ThumbCompoment formik={formik} />
+          </>
+          <>
+            <VideoCompoment formik={formik} />
+          </>
+        </div>
         <div className="w-full flex items-center justify-center my-5">
           <Button
             disabled={formik.isSubmitting}
