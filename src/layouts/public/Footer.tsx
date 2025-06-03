@@ -17,10 +17,10 @@ const FooterLayout = () => {
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div>
             <FooterBrand
-              href="https://flowbite.com"
-              src="https://flowbite.com/docs/images/logo.svg"
+              href="#"
+              src={import.meta.env.VITE_REACT_APP_IMG_HEADER}
               alt="Flowbite Logo"
-              name="Flowbite"
+              name="Web phim"
             />
           </div>
           <div className="grid grid-cols-2 gap-6 sm:mt-4">

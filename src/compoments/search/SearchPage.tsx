@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import { HiDocumentSearch } from "react-icons/hi";
 import { useState } from "react";
+import ActorCompoment from "../actor/ActorCompoment";
+import MovieCompoment from "../movie/MovieCompoment";
 
 const SearchPage = () => {
   const { slug } = useParams();
@@ -37,7 +39,10 @@ const SearchPage = () => {
         </button>
       </div>
 
-      <></>
+      <>
+        {type === "movie" && <MovieCompoment />}
+        {type === "actor" && <ActorCompoment />}
+      </>
     </div>
   );
 };
