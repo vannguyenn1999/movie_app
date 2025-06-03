@@ -19,6 +19,9 @@ const ListProviderContextAdmin = createContext<ListViewContextProps>({
 
   itemIdActorForUpdate: undefined,
   setItemIdActorForUpdate: () => {},
+
+  itemIdTopMovieForUpdate: undefined,
+  setItemIdTopMovieForUpdate: () => {},
 });
 
 const ListProviderProviderAdmin: FC<WithChildren> = ({ children }) => {
@@ -31,6 +34,8 @@ const ListProviderProviderAdmin: FC<WithChildren> = ({ children }) => {
   const [itemIdCountryForUpdate, setItemIdCountryForUpdate] =
     useState<ID>(undefined);
   const [itemIdActorForUpdate, setItemIdActorForUpdate] =
+    useState<ID>(undefined);
+  const [itemIdTopMovieForUpdate, setItemIdTopMovieForUpdate] =
     useState<ID>(undefined);
 
   return (
@@ -46,6 +51,8 @@ const ListProviderProviderAdmin: FC<WithChildren> = ({ children }) => {
         setItemIdCountryForUpdate,
         itemIdActorForUpdate,
         setItemIdActorForUpdate,
+        itemIdTopMovieForUpdate,
+        setItemIdTopMovieForUpdate,
       }}
     >
       {children}

@@ -46,6 +46,9 @@ export type ListViewContextProps = {
 
   itemIdActorForUpdate: ID
   setItemIdActorForUpdate: Dispatch<SetStateAction<ID>>
+
+  itemIdTopMovieForUpdate: ID
+  setItemIdTopMovieForUpdate: Dispatch<SetStateAction<ID>>
 }
 
 export type PaginationType = {
@@ -140,6 +143,14 @@ export type ActorItem = {
   created_at?: string;
   updated_at?: string;
   slug?: string
+}
+
+export type TopMovie = {
+  id: number
+  movie?: MovieItem
+  level?: number
+  created_at?: string
+  updated_at?: string
 }
 
 

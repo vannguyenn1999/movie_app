@@ -12,6 +12,7 @@ import {
   FaFolder,
   FaTags,
   FaHome,
+  FaThList,
 } from "react-icons/fa";
 
 import { Link, useLocation } from "react-router-dom";
@@ -80,6 +81,16 @@ const SidebarLayout = () => {
               className="my-1.5"
             >
               Quốc gia
+            </SidebarItem>
+
+            <SidebarItem
+              as={Link}
+              to="/admin/top-phim"
+              active={location.pathname === "/admin/top-phim"}
+              icon={FaThList}
+              className="my-1.5"
+            >
+              Top phim
             </SidebarItem>
 
             <SidebarItem as={Link} to="/" icon={FaHome} className="my-1.5">

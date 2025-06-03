@@ -18,6 +18,7 @@ const TopicAdminPage = lazy(() => import("@/admin/topic/TopicAdminPage"));
 
 // ? User
 import MasterLayout from "@/layouts/public/MasterLayout";
+import TopMoviePage from "@/admin/top-movie/TopMoviePage";
 
 const ActorDetailPage = lazy(
   () => import("@/compoments/actor/ActorDetailPage")
@@ -75,6 +76,7 @@ const PublicRouter = () => {
                   <Route path="chu-de" element={<TopicAdminPage />} />
                   <Route path="quoc-gia" element={<CountryAdminPage />} />
                   <Route path="phim" element={<MovieAdminPage />} />
+                  <Route path="top-phim" element={<TopMoviePage />} />
                   <Route path="*" element={<Navigate to="/home" />} />
                 </Route>
               )}
