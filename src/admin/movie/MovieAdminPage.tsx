@@ -132,7 +132,7 @@ const MovieAdminPage = () => {
           </Button>
         )}
       </div>
-      <div className="overflow-x-auto max-h-screen">
+      <div className="overflow-x-auto">
         <Table hoverable>
           <TableHead>
             <TableRow>

@@ -101,7 +101,7 @@ const HeaderLayout = () => {
                   Quốc gia
                 </span>
                 <FaCaretDown />
-                <div className="absolute top-full left-1/2 -translate-x-1/2 min-w-[100px] bg-gray-800 text-white rounded shadow-lg opacity-0 group-hover:opacity-90 pointer-events-none group-hover:pointer-events-auto transition-opacity z-10">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 min-w-[150px] bg-gray-800 text-white rounded shadow-lg opacity-0 group-hover:opacity-90 pointer-events-none group-hover:pointer-events-auto transition-opacity z-10">
                   <div className="grid grid-cols-1 p-2">
                     {Array.isArray(dataCountry) &&
                       dataCountry.map((item: CountryItem) => (

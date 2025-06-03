@@ -31,6 +31,7 @@ const MovieDetailPage = () => {
       </div>
     );
   }
+  console.log("da", data);
 
   return (
     <div className="px-20 py-32 min-h-[700px]">
@@ -89,7 +90,7 @@ const MovieDetailPage = () => {
           <p className="text-white mt-3">
             Quốc gia :{" "}
             <span className="text-gray-400 text-sm ms-2">
-              {data?.results[0]?.country.name}
+              {data?.results[0]?.country?.name || "Đang cập nhật"}
             </span>
           </p>
 

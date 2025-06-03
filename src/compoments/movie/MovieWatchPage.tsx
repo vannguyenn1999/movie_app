@@ -41,13 +41,14 @@ const MovieWatchPage = () => {
 
         {/* Video section */}
         {/* <div className={`my-10 rounded-xl ${cinemaMode ? "fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-5xl" : ""}`}> */}
-        <div className={`my-10 rounded-xl  relative shadow-lg z-50`}>
+        <div className={`my-10 rounded-xl relative shadow-lg z-50`}>
           <video
             src={data?.results[0].video}
             // src="http://127.0.0.1:8000/media/videos/1555540928584381-.mp4"
-            className="w-full rounded-t-xl"
-            width="1920"
-            height="1080"
+            className="w-full rounded-t-xl max-w-[1920px] max-h-[1080px]"
+            // width="1920"
+            // height="1080"
+            autoPlay
             controls
             // allowFullScreen
           />
@@ -138,10 +139,12 @@ const MovieWatchPage = () => {
                       return (
                         <Link to={`/phim/${item.slug}`} key={item.id}>
                           <MovidCardItemCompoment
-                            image={item.image ? item.image : ""}
-                            title={item.title}
-                            release_date={item.release_date}
-                            duration={item.duration}
+                            image={item.image ? String(item.image) : ""}
+                            title={item.title || "Đang cập nhật"}
+                            release_date={
+                              String(item.release_date) || "Đang cập nhật"
+                            }
+                            duration={item.duration || "Đang cập nhật"}
                           />
                         </Link>
                       );

@@ -28,7 +28,7 @@ const editMovieSchema = Yup.object().shape({
     .required("Tên của phim phải được nhập !"),
   description: Yup.string()
     .min(3, "Tối thiểu là 3 ký tự")
-    .max(500, "Tối đa là 500 ký tự")
+    .max(1000, "Tối đa là 1000 ký tự")
     .required("Giới thiệu cho phim phải được nhập !"),
 });
 
@@ -100,6 +100,8 @@ const MovieEditModalForm: FC<Props> = ({ movie }) => {
           "description",
           values.description ? values.description : ""
         );
+        dataMovie.append("is_ads", values.is_ads ? "true" : "false");
+        dataMovie.append("is_banner", values.is_banner ? "true" : "false");
         dataMovie.append(
           "release_date",
           values.release_date

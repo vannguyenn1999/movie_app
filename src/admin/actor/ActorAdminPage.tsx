@@ -126,7 +126,7 @@ const ActorAdminPage = () => {
           )}
         </div>
       </div>
-      <div className="overflow-x-auto ">
+      <div className="overflow-x-auto">
         <Table hoverable className="min-w-[900px]">
           <TableHead>
             <TableRow>

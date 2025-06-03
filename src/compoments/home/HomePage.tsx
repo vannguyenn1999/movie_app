@@ -60,7 +60,7 @@ const HomePage = () => {
           {data.map((item: MovieItem, index: number) => (
             <img
               key={item.id}
-              src={item.image_avatar ? item.image_avatar : ""}
+              src={String(item.image_avatar)}
               alt={`Thumbnail ${item.id}`}
               className={`w-24 h-15 object-cover rounded-lg cursor-pointer ${
                 index === current
@@ -82,7 +82,7 @@ const HomePage = () => {
             </div>
             <div className="border-2 border-amber-50 p-1 rounded-lg">
               <span className="text-amber-50 flex justify-center">
-                {data[current].release_date}
+                {String(data[current].release_date)}
               </span>
             </div>
             <div className="border-2 border-amber-50 py-1 px-0 rounded-lg">
@@ -111,7 +111,7 @@ const HomePage = () => {
 
           <div className="w-100 mt-5">
             <span className="text-amber-50 text-sm">
-              {data[current].description}
+              {data[current].description?.slice(0, 300)}...
             </span>
           </div>
 
@@ -130,19 +130,18 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Chủ để ở trang chủ */}
       <>
         <TopicLayout />
       </>
       {/* Chủ để ở trang chủ */}
-      
+
       {/* Phim ở trang chủ */}
       <>
         <HomeMovie />
       </>
       {/* Phim ở trang chủ */}
-
     </>
   );
 };
