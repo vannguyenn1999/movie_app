@@ -20,9 +20,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-      {/* <Flowbite> */}
-      <PublicRouter />
-      {/* </Flowbite> */}
+        {/* <Flowbite> */}
+        <PublicRouter />
+        {/* </Flowbite> */}
       </AuthProvider>
     </QueryClientProvider>
   </StrictMode>
