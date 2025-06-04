@@ -2,59 +2,75 @@ import { useState, type FC } from "react";
 // import * as Yup from "yup";
 import { useFormik } from "formik";
 // import clsx from "clsx";
-import { Button, Label, Select, Spinner } from "flowbite-react";
+import { Button, Label, Select, Spinner, TextInput } from "flowbite-react";
 import { FaSave } from "react-icons/fa";
 
 import type { TopMovie } from "@/helpers/models";
-import { useListProvider } from "@/stores/ListProvider";
 import { isNotEmpty } from "@/helpers/functions";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
 import { createData, updateData } from "@/core/request";
 import { toast } from "react-toastify";
 import { DATA_LEVEL } from "@/helpers/data_ex";
+import MovieTable from "../movie/MovieTable";
 
 type Props = {
   movie: TopMovie;
 };
 
 const TopMovieEditModalForm: FC<Props> = ({ movie }) => {
-  const { refetchCategory } = useListProvider();
-  const { setItemIdCategoryForUpdate } = useListProviderAdmin();
+  const { setItemIdTopMovieForUpdate } = useListProviderAdmin();
   const [topicForEdit] = useState<TopMovie>({
     ...movie,
   });
-
-  const cancel = (withRefresh?: boolean) => {
-    if (withRefresh) {
-      refetchCategory();
-    }
-    setItemIdCategoryForUpdate(undefined);
-  };
 
   const formik = useFormik({
     initialValues: topicForEdit,
     onSubmit: async (values, { setSubmitting }) => {
       setSubmitting(true);
       try {
+        let result;
         if (isNotEmpty(values.id)) {
-          await updateData("/categories/", values);
-          toast.success("Cập nhật thành công !");
+          result = await updateData("/top-movies/", values);
         } else {
-          await createData("/categories/", values);
-          toast.success("Thêm mới thành công !");
+          result = await createData("/top-movies/", values);
+        }
+
+        console.log("result", result);
+
+        if (result !== undefined && "msg" in result) {
+          toast.error(`${result.msg}`);
+        } else {
+          if (isNotEmpty(values.id)) {
+            toast.success("Cập nhật thành công !");
+          } else {
+            toast.success("Thêm mới thành công !");
+          }
+          setItemIdTopMovieForUpdate(undefined);
         }
       } catch (ex) {
         console.error(ex);
         toast.error("Đã xảy ra lỗi vui lòng kiểm tra lại !");
       } finally {
         setSubmitting(true);
-        cancel(true);
       }
     },
   });
   return (
     <>
       <form className="form" onSubmit={formik.handleSubmit} noValidate>
+        <>{formik.values.id === 0 && <MovieTable formik={formik} />}</>
+        <>
+          {formik.values.id !== 0 && (
+            <TextInput
+              id="title"
+              type="text"
+              autoComplete="current-title"
+              {...formik.getFieldProps("movie.title")}
+              className="dark:bg-gray-700 dark:placeholder-gray-400 rounded-lg bg-gray-500 mb-5"
+              readOnly
+            />
+          )}
+        </>
         <div>
           <Label htmlFor="birthday" className="mb-2 block">
             Xếp hạng :

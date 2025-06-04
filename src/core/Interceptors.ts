@@ -38,7 +38,8 @@ const onResponseError = (error: AxiosError) => {
   if (
     error.status === 400 &&
     (originalRequest?.url === "auth/register/" ||
-      originalRequest?.url === "auth/user/1/")
+      originalRequest?.url === "auth/user/1/" ||
+      originalRequest?.url?.includes("/top-movies/"))
   ) {
     return {
       status: 400,

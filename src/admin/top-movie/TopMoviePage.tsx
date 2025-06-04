@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -14,20 +14,28 @@ import { HiPencil, HiPlusCircle, HiTrash } from "react-icons/hi";
 
 import { deleteMultiItem, getData } from "@/core/request";
 import LoadingCompoment from "@/compoments/loading/Loading2";
-import type { ID } from "@/helpers/models";
+import type { ID, TopMovie } from "@/helpers/models";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { formatDate, groupingOnSelect } from "@/helpers/functions";
+import { convertTime, groupingOnSelect } from "@/helpers/functions";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
+import MovidCardItemCompoment from "@/compoments/movie/item/MovieCardItem";
 
 const TopMoviePage = () => {
   const [selectItem, setSelectItem] = useState<ID[]>([]);
-  const { setItemIdTopMovieForUpdate } = useListProviderAdmin();
+  const { setItemIdTopMovieForUpdate, itemIdTopMovieForUpdate } =
+    useListProviderAdmin();
 
   const { isPending, data, refetch } = useQuery({
     queryKey: [`DATA_ADMIN_TOPMOVIE`],
     queryFn: () => getData(`/top-movies/`),
   });
+
+  useEffect(() => {
+    if (itemIdTopMovieForUpdate === undefined) {
+      refetch();
+    }
+  }, [itemIdTopMovieForUpdate]);
 
   const handleDelete = (ids: ID[]) => {
     try {
@@ -58,7 +66,7 @@ const TopMoviePage = () => {
   };
   if (isPending) return <LoadingCompoment />;
 
-  console.log("data", data);
+  // console.log("data", data);
 
   return (
     <>
@@ -83,7 +91,7 @@ const TopMoviePage = () => {
               >
                 <div className="flex items-center justify-center gap-1">
                   <HiTrash />
-                  <span>Xóa {selectItem.length} thể loại</span>
+                  <span>Xóa {selectItem.length} phim</span>
                 </div>
               </Button>
             )}
@@ -94,10 +102,14 @@ const TopMoviePage = () => {
             <TableRow>
               <TableHeadCell className="text-center"></TableHeadCell>
               {/* <TableHeadCell className="text-center">STT</TableHeadCell> */}
-              <TableHeadCell className="text-start">Phim</TableHeadCell>
-              <TableHeadCell className="text-center">Xếp hạng</TableHeadCell>
-              <TableHeadCell className="text-center">Ngày tạo</TableHeadCell>
-              <TableHeadCell className="text-center">
+              <TableHeadCell className="text-center">Phim</TableHeadCell>
+              <TableHeadCell className="text-center max-w-[200px]">
+                Xếp hạng
+              </TableHeadCell>
+              <TableHeadCell className="text-center max-w-[200px]">
+                Ngày tạo
+              </TableHeadCell>
+              <TableHeadCell className="text-center max-w-[200px]">
                 Ngày cập nhật
               </TableHeadCell>
               <TableHeadCell>
@@ -108,7 +120,7 @@ const TopMoviePage = () => {
           <TableBody className="divide-y">
             {Array.isArray(data) && data.length > 0 ? (
               <>
-                {data.map((item) => (
+                {data.map((item: TopMovie) => (
                   <TableRow
                     className="bg-white dark:border-gray-700 dark:bg-gray-800"
                     key={item.id}
@@ -121,23 +133,28 @@ const TopMoviePage = () => {
                     </TableCell>
 
                     <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white text-start">
-                      {item.name}
+                      <MovidCardItemCompoment
+                        title={item.movie?.title || ""}
+                        image={String(item.movie?.image)}
+                        duration={item.movie?.duration || ""}
+                        release_date={String(item.movie?.release_date)}
+                      />
                     </TableCell>
-                    <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white text-center">
+                    <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white text-center max-w-[200px]s">
                       {item.level}
                     </TableCell>
-                    <TableCell className="text-center text-sm">
-                      {item.created_at ? formatDate(item.created_at) : ""}
+                    <TableCell className="text-center text-sm max-w-[200px]">
+                      {item.created_at ? convertTime(item.created_at) : ""}
                     </TableCell>
-                    <TableCell className="text-center text-sm">
-                      {item.updated_at ? formatDate(item.updated_at) : ""}
+                    <TableCell className="text-center text-sm max-w-[200px]">
+                      {item.updated_at ? convertTime(item.updated_at) : ""}
                     </TableCell>
 
                     <TableCell>
                       <div className="flex justify-center items-center">
                         <HiPencil
                           className="text-lg cursor-pointer"
-                          //   onClick={() => handleEdit(item.id)}
+                          onClick={() => setItemIdTopMovieForUpdate(item.id)}
                         />
                         <HiTrash
                           className="ms-2 text-lg cursor-pointer"

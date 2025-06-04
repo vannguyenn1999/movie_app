@@ -11,6 +11,7 @@ const TopMovieModal = () => {
     <Modal
       show={itemIdTopMovieForUpdate !== undefined}
       onClose={() => setItemIdTopMovieForUpdate(undefined)}
+      size="5xl"
     >
       <ModalHeader>Top phim</ModalHeader>
       <ModalBody>

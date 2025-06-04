@@ -16,8 +16,6 @@ const HeaderLayout = () => {
   const { dataCategory, dataCountry, dataTopic } = useListProvider();
   const { auth } = useAuth();
 
-  console.log("auth", auth);
-
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate(`/tim-kiem/${inputRefs?.current?.value}`);
