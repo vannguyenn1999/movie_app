@@ -2,12 +2,13 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { RatingStar, Rating } from "flowbite-react";
 import { FaPlay, FaHeart, FaShare, FaCommentDots } from "react-icons/fa";
+import { lazy, useCallback } from "react";
 
 import type { ActorItem, CategoryItem } from "@/helpers/models";
 import { getData } from "@/core/request";
-import LoadingCompoment from "@/compoments/loading/Loading2";
 import TagLayout from "./tags/Tags";
-import { useCallback } from "react";
+
+const LoadingCompoment = lazy(() => import("@/compoments/loading/Loading2"));
 
 const MovieDetailPage = () => {
   const { slug } = useParams();
@@ -27,7 +28,7 @@ const MovieDetailPage = () => {
   if (!data?.results[0]) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <h1 className="text-white text-2xl font-bold">Không tìm thấy phim</h1>
+        <h2 className="text-white text-2xl font-bold">Không tìm thấy phim</h2>
       </div>
     );
   }
@@ -41,6 +42,7 @@ const MovieDetailPage = () => {
             src={data?.results[0]?.image}
             alt={data?.results[0]?.title}
             className="object-contain w-60 rounded-xl bg-gray-400"
+            loading="lazy"
           />
           <div className="my-3">
             <span className="text-white font-bold text-xl">
@@ -103,6 +105,7 @@ const MovieDetailPage = () => {
                     className="w-20 h-20 rounded-full object-cover "
                     src={item.image}
                     alt={item.name}
+                    loading="lazy"
                   />
                 </div>
                 <span className="flex justify-center items-centers mt-2 text-white text-sm text-center">

@@ -57,6 +57,7 @@ const ImageCompoment: FC<MovieOtherDataProps> = ({ formik }) => {
             src={imagePreview.path}
             alt=""
             className="h-auto max-w-50 rounded-lg"
+            loading="lazy"
           />
         </div>
       )}

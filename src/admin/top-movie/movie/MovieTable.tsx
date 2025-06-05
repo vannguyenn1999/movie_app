@@ -9,15 +9,16 @@ import {
   TableRow,
   TextInput,
 } from "flowbite-react";
-import { useState, type FC } from "react";
+import { lazy, useState, type FC } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 
-import LoadingCompoment from "@/compoments/loading/Loading2";
 import { getData } from "@/core/request";
 import PaginationCompoment from "@/helpers/compoments/PaginationCompoment";
 import { useDebounce } from "@/helpers/hook";
 import type { MovieItem } from "@/helpers/models";
 import type { MovieOtherDataProps } from "@/core/models";
+
+const LoadingCompoment = lazy(() => import("@/compoments/loading/Loading2"));
 
 const MovieTable: FC<MovieOtherDataProps> = ({ formik }) => {
   const [search, setSearch] = useState<string>("");
@@ -95,6 +96,7 @@ const MovieTable: FC<MovieOtherDataProps> = ({ formik }) => {
                           src={item.image ? String(item.image) : ""}
                           alt={item.title}
                           className="w-20 h-20 object-cover rounded-lg"
+                          loading="lazy"
                         />
                       </div>
                     </TableCell>

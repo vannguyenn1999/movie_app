@@ -1,17 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useCallback, useEffect, type FC, useMemo } from "react";
+import {
+  useState,
+  useCallback,
+  useEffect,
+  type FC,
+  useMemo,
+  lazy,
+} from "react";
 import Select from "react-select";
+import { useQuery } from "@tanstack/react-query";
 import makeAnimated from "react-select/animated";
 import { Avatar, Label } from "flowbite-react";
 import type { MultiValue, ActionMeta } from "react-select";
-import type { OptionType, OptionType2 } from "@/core/models";
 import type { FormikProps } from "formik";
 
+import type { OptionType, OptionType2 } from "@/core/models";
 import type { ActorItem } from "@/helpers/models";
 import { getData } from "@/core/request";
-import { useQuery } from "@tanstack/react-query";
-import LoadingCompoment from "@/compoments/loading/Loading2";
+
+const LoadingCompoment = lazy(() => import("@/compoments/loading/Loading2"));
 
 const animatedComponents = makeAnimated();
 
@@ -41,6 +49,7 @@ const ActorSelectCompoment: FC<MovieOtherDataProps> = ({ formik }) => {
                 </Avatar>
               </div>
             ),
+            labelText: item.name,
           };
         }
       );
@@ -68,6 +77,11 @@ const ActorSelectCompoment: FC<MovieOtherDataProps> = ({ formik }) => {
     );
   };
 
+  const customFilter = (option: any, rawInput: string) => {
+    const input = rawInput.toLowerCase();
+    return option.data.labelText.toLowerCase().includes(input);
+  };
+
   return (
     <>
       <Label htmlFor="" className="block">
@@ -78,8 +92,11 @@ const ActorSelectCompoment: FC<MovieOtherDataProps> = ({ formik }) => {
         components={animatedComponents}
         onChange={handleOnChangeData}
         className="w-auto"
+        filterOption={customFilter}
         isMulti
         defaultValue={getDataActor()}
+        // getOptionLabel={(option) => option.labelText} // Dùng labelText để filter
+        // getOptionValue={(option) => option.value}s
 
         // components={{
         //   ...animatedComponents,

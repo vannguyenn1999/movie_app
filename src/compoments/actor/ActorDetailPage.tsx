@@ -1,11 +1,13 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { lazy } from "react";
 
 import { getData } from "@/core/request";
 // import type { ActorItem } from "@/helpers/models";
-import LoadingCompoment from "@/compoments/loading/Loading2";
 import { convertTime } from "@/helpers/functions";
 import type { MovieItem } from "@/helpers/models";
+
+const LoadingCompoment = lazy(() => import("@/compoments/loading/Loading2"));
 
 const ActorDetailPage = () => {
   const { slug } = useParams();
@@ -39,6 +41,7 @@ const ActorDetailPage = () => {
               alt={`${data?.results[0]?.name}`}
               srcSet=""
               className="object-cover rounded-2xl w-50 h-50 bg-gray-600"
+              loading="lazy"
             />
           </div>
           <h3 className="py-5 font-bold text-2xl text-white">
@@ -73,10 +76,10 @@ const ActorDetailPage = () => {
         </div>
         <div className="col-span-3 p-5">
           <div>
-            <h1 className="text-white font-bold text-xl">
+            <h2 className="text-white font-bold text-xl">
               {" "}
               Các bộ phim đã tham gia
-            </h1>
+            </h2>
           </div>
 
           <div className="grid grid-cols-5 gap-4 pt-5">
@@ -85,9 +88,10 @@ const ActorDetailPage = () => {
                 return (
                   <Link to={`/xem-phim/${item.slug}`} key={item.id}>
                     <img
-                      src={item.image_avatar ? item.image_avatar : ""}
+                      src={item.image_avatar ? String(item.image_avatar) : ""}
                       alt={item.title}
                       className="rounded-2xl object-cover"
+                      loading="lazy"
                     />
                     <span className="flex justify-center text-white text-sm pt-2">
                       {item.title}

@@ -22,9 +22,12 @@ import {
   HiTrash,
   HiUserGroup,
 } from "react-icons/hi";
+import { lazy, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 import { deleteMultiItem, getData } from "@/core/request";
-import LoadingCompoment from "@/compoments/loading/Loading2";
 import type {
   ActorItem,
   CategoryItem,
@@ -32,14 +35,12 @@ import type {
   MovieItem,
   TopicItem,
 } from "@/helpers/models";
-import { Link } from "react-router-dom";
 import { convertTime, groupingOnSelect } from "@/helpers/functions";
-import { useEffect, useState } from "react";
 import { useDebounce } from "@/helpers/hook";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
 import PaginationCompoment from "@/helpers/compoments/PaginationCompoment";
-import Swal from "sweetalert2";
-import { toast } from "react-toastify";
+
+const LoadingCompoment = lazy(() => import("@/compoments/loading/Loading2"));
 
 const MovieAdminPage = () => {
   const [selectItem, setSelectItem] = useState<ID[]>([]);
@@ -98,7 +99,7 @@ const MovieAdminPage = () => {
 
   return (
     <div className="h-screen">
-      <h1 className="text-xl font-bold">Quản lý Phim</h1>
+      <h2 className="text-xl font-bold">Quản lý Phim</h2>
       <div className="flex justify-start items-center my-4">
         <div className="max-w-xl me-4">
           <TextInput
@@ -233,6 +234,7 @@ const MovieAdminPage = () => {
                           src={item.image ? String(item.image) : ""}
                           alt={item.title}
                           className="w-20 h-20 object-cover rounded-lg"
+                          loading="lazy"
                         />
                       </div>
                     </TableCell>
@@ -244,6 +246,7 @@ const MovieAdminPage = () => {
                           }
                           alt={item.title}
                           className="w-20 h-20 object-cover rounded-lg"
+                          loading="lazy"
                         />
                       </div>
                     </TableCell>

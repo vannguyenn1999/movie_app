@@ -40,6 +40,7 @@ const MovieItemCompoment: FC<MovieItemProps> = ({
           src={image_avatar ? image_avatar : ""}
           alt=""
           srcSet=""
+          loading="lazy"
         />
       </div>
       <span className="flex justify-center items-center mt-2 w-auto text-center text-white font-bold text-sm">

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -11,15 +11,16 @@ import {
   TableRow,
 } from "flowbite-react";
 import { HiPencil, HiPlusCircle, HiTrash } from "react-icons/hi";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 import { deleteMultiItem, getData } from "@/core/request";
-import LoadingCompoment from "@/compoments/loading/Loading2";
 import type { ID, TopMovie } from "@/helpers/models";
-import Swal from "sweetalert2";
-import { toast } from "react-toastify";
 import { convertTime, groupingOnSelect } from "@/helpers/functions";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
 import MovidCardItemCompoment from "@/compoments/movie/item/MovieCardItem";
+
+const LoadingCompoment = lazy(() => import("@/compoments/loading/Loading2"));
 
 const TopMoviePage = () => {
   const [selectItem, setSelectItem] = useState<ID[]>([]);
@@ -72,7 +73,7 @@ const TopMoviePage = () => {
     <>
       <div className="overflow-x-auto h-screen">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-xl font-bold">Quản lý Top phim</h1>
+          <h2 className="text-xl font-bold">Quản lý Top phim</h2>
           <div className="flex justify-end items-center">
             <Button
               onClick={() => setItemIdTopMovieForUpdate(null)}

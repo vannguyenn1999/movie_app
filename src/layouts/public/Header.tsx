@@ -2,13 +2,14 @@ import { Navbar, TextInput } from "flowbite-react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { FaCaretDown } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { lazy, useRef } from "react";
 
 import type { CategoryItem, CountryItem, TopicItem } from "@/helpers/models";
 import { useListProvider } from "@/stores/ListProvider";
-import LoginCompoment from "@/compoments/login/LoginCompoment";
 import { useAuth } from "@/core/Auth";
-import HeaderProfile from "@/compoments/login/HeaderProfile";
+
+const LoginCompoment = lazy(() => import("@/compoments/login/LoginCompoment"));
+const HeaderProfile = lazy(() => import("@/compoments/login/HeaderProfile"));
 
 const HeaderLayout = () => {
   const inputRefs = useRef<HTMLInputElement>(null);
@@ -23,15 +24,19 @@ const HeaderLayout = () => {
 
   return (
     <>
+      {/* 0f111a */}
+      {/* transparent */}
       <Navbar fluid style={{ backgroundColor: "transparent" }}>
         <div className="flex justify-between items-center w-full">
           <div className="flex-1">
             <div className="flex justify-center items-center">
               <Link to={"/home"}>
                 <img
-                  src={import.meta.env.VITE_REACT_APP_IMG_HEADER}
+                  // src={import.meta.env.VITE_REACT_APP_IMG_HEADER}
+                  src="/vite.svg"
                   className="mr-3 h-6 sm:h-9 opacity-100"
                   alt="Flowbite React Logo"
+                  loading="lazy"
                 />
               </Link>
               {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">

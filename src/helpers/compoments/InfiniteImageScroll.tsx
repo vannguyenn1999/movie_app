@@ -48,6 +48,7 @@ export default function InfiniteImageScroll() {
         {[...images, ...images].map((src, idx) => (
           <img
             key={idx}
+            loading="lazy"
             src={src}
             className="w-[300px] h-[200px] object-cover rounded-md shrink-0"
             alt={`scroll-img-${idx}`}

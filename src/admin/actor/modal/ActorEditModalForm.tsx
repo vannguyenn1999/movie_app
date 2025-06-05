@@ -270,6 +270,7 @@ const ActorEditModalForm: FC<Props> = ({ actor }) => {
                 src={Object(imagePreview)?.path}
                 alt=""
                 className="h-auto max-w-50 rounded-lg"
+                loading="lazy"
               />
             </div>
           )}

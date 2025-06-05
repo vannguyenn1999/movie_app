@@ -18,16 +18,17 @@ import {
   HiTrash,
 } from "react-icons/hi";
 import Swal from "sweetalert2";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import { deleteMultiItem, getData } from "@/core/request";
 import type { ActorItem, ID } from "@/helpers/models";
 import { convertTime, groupingOnSelect } from "@/helpers/functions";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
-import LoadingCompoment from "@/compoments/loading/Loading2";
 import PaginationCompoment from "@/helpers/compoments/PaginationCompoment";
 import { useDebounce } from "@/helpers/hook";
+
+const LoadingCompoment = lazy(() => import("@/compoments/loading/Loading2"));
 
 const ActorAdminPage = () => {
   const [selectItem, setSelectItem] = useState<ID[]>([]);
@@ -90,7 +91,7 @@ const ActorAdminPage = () => {
 
   return (
     <div className="h-screen">
-      <h1 className="text-xl font-bold">Quản lý diễn viên</h1>
+      <h2 className="text-xl font-bold">Quản lý diễn viên</h2>
       <div className="flex justify-between items-center my-4">
         <div className="max-w-xl">
           <TextInput
@@ -192,6 +193,7 @@ const ActorAdminPage = () => {
                           src={item.image}
                           alt={item.name}
                           className="w-20 h-20 object-cover rounded-lg"
+                          loading="lazy"
                         />
                       </div>
                     </TableCell>

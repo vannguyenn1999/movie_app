@@ -60,7 +60,7 @@ const TopicAdminPage = () => {
     <>
       <div className="overflow-x-auto h-screen">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-xl font-bold">Quản lý chủ đề</h1>
+          <h2 className="text-xl font-bold">Quản lý chủ đề</h2>
           <div className="flex justify-end items-center">
             <Button
               onClick={() => setItemIdTopicForUpdate(null)}

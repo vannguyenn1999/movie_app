@@ -1,12 +1,13 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { FaFlag, FaHeart, FaShare } from "react-icons/fa";
 
 import type { ActorItem, CategoryItem, MovieItem } from "@/helpers/models";
 import { getData } from "@/core/request";
-import LoadingCompoment from "@/compoments/loading/Loading2";
-import MovidCardItemCompoment from "./item/MovieCardItem";
+
+const MovidCardItemCompoment = lazy(() => import("./item/MovieCardItem"));
+const LoadingCompoment = lazy(() => import("@/compoments/loading/Loading2"));
 
 const MovieWatchPage = () => {
   const { slug } = useParams();
@@ -117,6 +118,7 @@ const MovieWatchPage = () => {
                       className="w-20 h-20 rounded-full object-cover "
                       src={item.image}
                       alt={item.name}
+                      loading="lazy"
                     />
                   </div>
                   <span className="flex justify-center items-centers mt-2 text-white text-sm text-center">

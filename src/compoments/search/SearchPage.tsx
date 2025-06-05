@@ -12,7 +12,7 @@ const SearchPage = () => {
     <div className="px-20 py-32 min-h-[700px]">
       <div className="text-white text-2xl flex items-center">
         <HiDocumentSearch />
-        <h1 className="ms-1">Kết quả tìm kiếm : "{slug}"</h1>
+        <h2 className="ms-1">Kết quả tìm kiếm : "{slug}"</h2>
       </div>
 
       <div className="flex jsutify-start items-center mt-5">

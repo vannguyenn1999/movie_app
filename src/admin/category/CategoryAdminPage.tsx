@@ -60,7 +60,7 @@ const CategoryAdminPage = () => {
     <>
       <div className="overflow-x-auto h-screen">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-xl font-bold">Quản lý thể loại</h1>
+          <h2 className="text-xl font-bold">Quản lý thể loại</h2>
           <div className="flex justify-end items-center">
             <Button
               onClick={() => setItemIdCategoryForUpdate(null)}

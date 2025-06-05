@@ -22,6 +22,7 @@ const MovidCardItemCompoment: FC<MovidCardItemProps> = ({
         alt=""
         srcSet=""
         className="object-cover w-24 h-24 rounded-2xl"
+        loading="lazy"
       />
       <div className="ms-3 my-auto">
         <h5 className="text-center text-gray-300 font-semibold">{title}</h5>

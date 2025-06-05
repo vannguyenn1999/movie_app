@@ -1,11 +1,13 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, FreeMode } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import { lazy } from "react";
 
 import { getData } from "@/core/request";
-import LoadingCompoment from "../loading/Loading2";
 import type { TopMovie } from "@/helpers/models";
-import { Link } from "react-router-dom";
+
+const LoadingCompoment = lazy(() => import("../loading/Loading2"));
 
 const CarouselMovie = () => {
   const { isPending, data } = useQuery({
@@ -35,6 +37,7 @@ const CarouselMovie = () => {
                 <img
                   src={String(item.movie?.image)}
                   className="w-[300px] h-[350px] object-cover rounded-md shrink-0"
+                  loading="lazy"
                   //   alt={`scroll-img-${idx}`}
                 />
                 <div className="flex justify-start mb-5">

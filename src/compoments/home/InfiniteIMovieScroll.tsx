@@ -53,17 +53,21 @@ const InfiniteIMovieScroll = () => {
         {!isPending && Array.isArray(data) ? (
           <>
             {[...data, ...data].map(
-              (item: {
-                id: number;
-                title: string;
-                image: string;
-                slug: string;
-              }) => (
-                <Link key={item.id} to={`/phim/${item.slug}`}>
+              (
+                item: {
+                  id: number;
+                  title: string;
+                  image: string;
+                  slug: string;
+                },
+                idx: number
+              ) => (
+                <Link key={idx} to={`/phim/${item.slug}`}>
                   <img
                     src={item.image}
-                    className="w-[300px] h-[200px] object-cover rounded-md shrink-0"
+                    className="w-[300px] h-[300px] object-cover rounded-md shrink-0"
                     alt={`scroll-img-${item.id}`}
+                    loading="lazy"
                   />
                   <span className="text-amber-200 text-sm my-3 flex justify-center">
                     {item.title}

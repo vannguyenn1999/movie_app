@@ -12,6 +12,7 @@ const ActorItemCompoment: FC<ActorItemProps> = ({ name, image }) => {
         src={image}
         alt={name}
         className="w-90 h-70 object-cover rounded-lg cursor-pointer bg-gray-600"
+        loading="lazy"
       />
       <div className="absolute bottom-0 left-0 w-full h-10 rounded-b-lg bg-gradient-to-t from-black/90 to-transparent"></div>
       <div className="absolute bottom-0 w-full flex justify-center">

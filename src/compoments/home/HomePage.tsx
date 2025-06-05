@@ -1,11 +1,12 @@
-import { useRef, useState } from "react";
+import { lazy, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Link } from "react-router-dom";
 
 import type { MovieItem, CategoryItem } from "@/helpers/models";
 import { useListProvider } from "@/stores/ListProvider";
-import TopicLayout from "@/compoments/home/Topic";
-import HomeMovie from "./HomeMovie";
+
+const TopicLayout = lazy(() => import("@/compoments/home/Topic"));
+const HomeMovie = lazy(() => import("./HomeMovie"));
 
 const HomePage = () => {
   const [current, setCurrent] = useState<number>(0); // Ảnh nền hiện tại
@@ -14,6 +15,14 @@ const HomePage = () => {
 
   const { dataHeader } = useListProvider();
   const data: MovieItem[] = dataHeader as MovieItem[];
+
+  // Preload ảnh nền đầu tiên
+  useEffect(() => {
+    if (data[0]?.image) {
+      const img = new window.Image();
+      img.src = String(data[0].image);
+    }
+  }, [data]);
 
   const changeBackground = (index: number) => {
     if (index === current) return; // Nếu ảnh được chọn là ảnh hiện tại, không làm gì
@@ -60,6 +69,7 @@ const HomePage = () => {
           {data.map((item: MovieItem, index: number) => (
             <img
               key={item.id}
+              loading="lazy"
               src={String(item.image_avatar)}
               alt={`Thumbnail ${item.id}`}
               className={`w-24 h-15 object-cover rounded-lg cursor-pointer ${

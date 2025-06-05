@@ -27,7 +27,8 @@ const SidebarLayout = () => {
       >
         <SidebarLogo
           href="#"
-          img={import.meta.env.VITE_REACT_APP_IMG_HEADER}
+          // img={import.meta.env.VITE_REACT_APP_IMG_HEADER}
+          img="/vite.svg"
           imgAlt="Flowbite logo"
         >
           Web Phim

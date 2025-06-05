@@ -18,7 +18,8 @@ const FooterLayout = () => {
           <div>
             <FooterBrand
               href="#"
-              src={import.meta.env.VITE_REACT_APP_IMG_HEADER}
+              // src={import.meta.env.VITE_REACT_APP_IMG_HEADER}
+              src="/vite.svg"
               alt="Flowbite Logo"
               name="Web phim"
             />

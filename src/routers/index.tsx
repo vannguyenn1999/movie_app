@@ -15,10 +15,10 @@ const CategoryAdminPage = lazy(
 const CountryAdminPage = lazy(() => import("@/admin/country/CountryAdminPage"));
 const MovieAdminPage = lazy(() => import("@/admin/movie/MovieAdminPage"));
 const TopicAdminPage = lazy(() => import("@/admin/topic/TopicAdminPage"));
+const TopMoviePage = lazy(() => import("@/admin/top-movie/TopMoviePage"));
 
 // ? User
 import MasterLayout from "@/layouts/public/MasterLayout";
-import TopMoviePage from "@/admin/top-movie/TopMoviePage";
 
 const ActorDetailPage = lazy(
   () => import("@/compoments/actor/ActorDetailPage")

@@ -15,28 +15,28 @@ const MoviePage = () => {
     switch (type) {
       case "chu-de":
         return (
-          <h1 className="text-white text-2xl font-bold">
+          <h2 className="text-white text-2xl font-bold">
             {" "}
             Phim {findNameBySlug(dataTopic, String(slug))}{" "}
-          </h1>
+          </h2>
         );
       case "the-loai":
         return (
-          <h1 className="text-white text-2xl font-bold">
+          <h2 className="text-white text-2xl font-bold">
             {" "}
             Phim {findNameBySlug(dataCategory, String(slug))}{" "}
-          </h1>
+          </h2>
         );
       case "quoc-gia":
         return (
-          <h1 className="text-white text-2xl font-bold">
+          <h2 className="text-white text-2xl font-bold">
             {" "}
             Phim {findNameBySlug(dataCountry, String(slug))}{" "}
-          </h1>
+          </h2>
         );
 
       default:
-        return <h1 className="text-white text-2xl font-bold"> Phim {slug}</h1>;
+        return <h2 className="text-white text-2xl font-bold"> Phim {slug}</h2>;
     }
   }, [type, slug]);
 

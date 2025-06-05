@@ -24,6 +24,7 @@ const LoadingLayout = () => {
               src="https://images.seeklogo.com/logo-png/22/2/garuda-pancasila-logo-png_seeklogo-229617.png"
               alt=""
               srcSet=""
+              loading="lazy"
             />
           </div>
           <span className="text-white font-bold text-4xl">

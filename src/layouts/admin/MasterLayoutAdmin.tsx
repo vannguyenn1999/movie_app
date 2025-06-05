@@ -1,13 +1,20 @@
 import { Outlet } from "react-router-dom";
+import { lazy } from "react";
 
-import SidebarLayout from "./SideBar";
 import { useListProviderAdmin } from "@/stores/ListProviderAdmin";
-import MovieModal from "@/admin/movie/modal/MovieModal";
-import ActorModal from "@/admin/actor/modal/ActorModal";
-import CategoryModal from "@/admin/category/modal/CategoryModal";
-import CountryModal from "@/admin/country/modal/CountryModal";
-import TopicModal from "@/admin/topic/modal/TopicModal";
-import TopMovieModal from "@/admin/top-movie/modal/TopMovieModal";
+
+const SidebarLayout = lazy(() => import("./SideBar"));
+const MovieModal = lazy(() => import("@/admin/movie/modal/MovieModal"));
+const ActorModal = lazy(() => import("@/admin/actor/modal/ActorModal"));
+const CategoryModal = lazy(
+  () => import("@/admin/category/modal/CategoryModal")
+);
+const CountryModal = lazy(() => import("@/admin/country/modal/CountryModal"));
+const TopicModal = lazy(() => import("@/admin/topic/modal/TopicModal"));
+
+const TopMovieModal = lazy(
+  () => import("@/admin/top-movie/modal/TopMovieModal")
+);
 
 const MasterLayoutAdmin = () => {
   const {

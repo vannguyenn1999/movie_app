@@ -50,9 +50,9 @@ export const initialQueryRequest: QueryRequestContextProps = {
 };
 
 
-export type OptionType = { label: string; value: string };
+export type OptionType = { label: string; value: string; labelText: string };
 
-export type OptionType2 = { label: string; value: JSX.Element }
+export type OptionType2 = { label: string; value: JSX.Element; labelText: string }
 
 export type MovieOtherDataProps = {
   formik: FormikProps<any>;

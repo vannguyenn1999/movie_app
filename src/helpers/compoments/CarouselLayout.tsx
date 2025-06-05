@@ -93,11 +93,13 @@ const GsapCarouselLayout: React.FC = () => {
             key={index}
             src={image.ava}
             alt={`Thumbnail ${index}`}
-            className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${index === current
-              ? "ring-4 ring-blue-500"
-              : "ring-2 ring-gray-300"
-              }`}
+            className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${
+              index === current
+                ? "ring-4 ring-blue-500"
+                : "ring-2 ring-gray-300"
+            }`}
             onClick={() => changeBackground(index)} // Thay đổi ảnh nền khi click
+            loading="lazy"
           />
         ))}
       </div>
