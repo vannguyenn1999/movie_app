@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import { type FC, useMemo, lazy } from "react";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +19,6 @@ const LoadingCompoment = lazy(() => import("@/compoments/loading/Loading2"));
 const animatedComponents = makeAnimated();
 
 type MovieOtherDataProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: FormikProps<any>;
 };
 
