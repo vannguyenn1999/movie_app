@@ -265,7 +265,7 @@ const MovieAdminPage = () => {
                       {item.language}
                     </TableCell>
                     <TableCell className="">
-                      <div className="cursor-pointer flex justify-center items-center cursor-pointer group relative">
+                      <div className="cursor-pointer flex justify-center items-center group relative">
                         <HiFolder />
                         <div className="absolute top-full left-1/2 -translate-x-1/2 min-w-[350px] bg-gray-800 text-white rounded shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity z-10">
                           <div className="grid grid-cols-3 p-2">
@@ -285,7 +285,7 @@ const MovieAdminPage = () => {
                       </div>
                     </TableCell>
                     <TableCell className="">
-                      <div className="cursor-pointer flex justify-center items-center cursor-pointer group relative">
+                      <div className="cursor-pointer flex justify-center items-center group relative">
                         <HiTag />
                         <div className="absolute top-full left-1/2 -translate-x-1/2 min-w-[350px] bg-gray-800 text-white rounded shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity z-10">
                           <div className="grid grid-cols-3 p-2">
@@ -305,7 +305,7 @@ const MovieAdminPage = () => {
                       </div>
                     </TableCell>
                     <TableCell className="">
-                      <div className="cursor-pointer flex justify-center items-center cursor-pointer group relative">
+                      <div className="cursor-pointer flex justify-center items-center group relative">
                         <HiUserGroup />
                         <div className="absolute top-full left-1/2 -translate-x-1/2 min-w-[350px] bg-gray-800 text-white rounded shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity z-10">
                           <div className="grid grid-cols-3 p-2">

@@ -50,7 +50,7 @@ const removeAuth = () => {
 };
 
 export function setupAxios(axiosInstance: AxiosInstance) {
-  axiosInstance.defaults.baseURL = import.meta.env.VITE_REACT_APP_API_URL_PRODUCT;
+  axiosInstance.defaults.baseURL = import.meta.env.VITE_REACT_APP_IS_DEV === "true" ? import.meta.env.VITE_REACT_APP_API_URL_DEV : import.meta.env.VITE_REACT_APP_API_URL_PRODUCT;
   axiosInstance.defaults.headers.Accept = "application/json";
 
   axiosInstance?.interceptors?.request.use(
