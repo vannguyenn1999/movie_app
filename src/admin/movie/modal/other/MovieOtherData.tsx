@@ -25,6 +25,7 @@ const MovieOtherData: FC<MovieOtherDataProps> = ({ formik }) => {
         return {
           value: String(item.id),
           label: item.name,
+          labelText: item.name, // Add labelText
         };
       }
     );
@@ -36,6 +37,7 @@ const MovieOtherData: FC<MovieOtherDataProps> = ({ formik }) => {
         return {
           value: String(item.id),
           label: item.title,
+          labelText: item.title, // Add labelText
         };
       }
     );
@@ -47,6 +49,7 @@ const MovieOtherData: FC<MovieOtherDataProps> = ({ formik }) => {
         return {
           value: String(item.id),
           label: item.name,
+          labelText: item.name, // Add labelText
         };
       }
     );

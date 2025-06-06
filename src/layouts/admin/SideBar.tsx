@@ -35,68 +35,70 @@ const SidebarLayout = () => {
         </SidebarLogo>
         <SidebarItems>
           <SidebarItemGroup>
-            <SidebarItem
-              as={Link}
-              to="/admin/phim"
-              active={location.pathname === "/admin/phim"}
-              icon={FaPhotoVideo}
-              className="my-1.5"
-            >
-              Phim
-            </SidebarItem>
-            <SidebarItem
-              as={Link}
-              to="/admin/dien-vien"
-              active={location.pathname === "/admin/dien-vien"}
-              icon={FaUserTie}
-              className="mb-1.5"
-            >
-              Diễn Viên
-            </SidebarItem>
+            <Link to="/admin/phim">
+              <SidebarItem
+                active={location.pathname === "/admin/phim"}
+                icon={FaPhotoVideo}
+                className="my-1.5"
+              >
+                Phim
+              </SidebarItem>
+            </Link>
+            <Link to="/admin/dien-vien">
+              <SidebarItem
+                active={location.pathname === "/admin/dien-vien"}
+                icon={FaUserTie}
+                className="mb-1.5"
+              >
+                Diễn Viên
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem
-              as={Link}
-              to="/admin/the-loai"
-              active={location.pathname === "/admin/the-loai"}
-              icon={FaFolder}
-              className="my-1.5"
-            >
-              Thể Loại
-            </SidebarItem>
+            <Link to="/admin/the-loai">
+              <SidebarItem
+                active={location.pathname === "/admin/the-loai"}
+                icon={FaFolder}
+                className="my-1.5"
+              >
+                Thể Loại
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem
-              as={Link}
-              to="/admin/chu-de"
-              active={location.pathname === "/admin/chu-de"}
-              icon={FaTags}
-              className="my-1.5"
-            >
-              Chủ đề
-            </SidebarItem>
+            <Link to="/admin/chu-de">
+              <SidebarItem
+                active={location.pathname === "/admin/chu-de"}
+                icon={FaTags}
+                className="my-1.5"
+              >
+                Chủ đề
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem
-              as={Link}
-              to="/admin/quoc-gia"
-              active={location.pathname === "/admin/quoc-gia"}
-              icon={FaGlobeAsia}
-              className="my-1.5"
-            >
-              Quốc gia
-            </SidebarItem>
+            <Link to="/admin/quoc-gia">
+              <SidebarItem
+                active={location.pathname === "/admin/quoc-gia"}
+                icon={FaGlobeAsia}
+                className="my-1.5"
+              >
+                Quốc gia
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem
-              as={Link}
-              to="/admin/top-phim"
-              active={location.pathname === "/admin/top-phim"}
-              icon={FaThList}
-              className="my-1.5"
-            >
-              Top phim
-            </SidebarItem>
+            <Link to="/admin/top-phim">
+              <SidebarItem
+                active={location.pathname === "/admin/top-phim"}
+                icon={FaThList}
+                className="my-1.5"
+              >
+                Top phim
+              </SidebarItem>
+            </Link>
 
-            <SidebarItem as={Link} to="/" icon={FaHome} className="my-1.5">
-              Trang phim
-            </SidebarItem>
+            <Link to="/">
+              <SidebarItem icon={FaHome} className="my-1.5">
+                Trang phim
+              </SidebarItem>
+            </Link>
           </SidebarItemGroup>
         </SidebarItems>
       </Sidebar>

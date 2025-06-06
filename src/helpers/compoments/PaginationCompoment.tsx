@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Pagination, TextInput } from "flowbite-react";
-import { useState, type FC } from "react";
+import { Pagination } from "flowbite-react";
+import { type FC } from "react";
 
 type PaginationProps = {
   currentPage?: number;

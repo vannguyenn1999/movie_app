@@ -1,13 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  useState,
-  useCallback,
-  useEffect,
-  type FC,
-  useMemo,
-  lazy,
-} from "react";
+import { type FC, useMemo, lazy } from "react";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import makeAnimated from "react-select/animated";
@@ -15,7 +9,7 @@ import { Avatar, Label } from "flowbite-react";
 import type { MultiValue, ActionMeta } from "react-select";
 import type { FormikProps } from "formik";
 
-import type { OptionType, OptionType2 } from "@/core/models";
+import type { OptionType } from "@/core/models";
 import type { ActorItem } from "@/helpers/models";
 import { getData } from "@/core/request";
 
@@ -59,10 +53,10 @@ const ActorSelectCompoment: FC<MovieOtherDataProps> = ({ formik }) => {
   if (isPending) return <LoadingCompoment />;
 
   const handleOnChangeData = (
-    data: MultiValue<OptionType2>,
-    actionMeta: ActionMeta<OptionType>
+    newData: MultiValue<OptionType>,
+    _actionMeta: ActionMeta<OptionType>
   ) => {
-    const result = data.map((item) => item.value);
+    const result = newData.map((item) => item.value);
     formik.setFieldValue("actor", result);
     // console.log("data", data);
   };
@@ -88,7 +82,7 @@ const ActorSelectCompoment: FC<MovieOtherDataProps> = ({ formik }) => {
         Diễn viên :
       </Label>
       <Select
-        options={dataActorSelect}
+        options={dataActorSelect as OptionType[]}
         components={animatedComponents}
         onChange={handleOnChangeData}
         className="w-auto"
